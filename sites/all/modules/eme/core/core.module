@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * Implements hook_menu();
+ */
+
+function core_menu() {
+
+  $items = array();
+  // Module settings.
+  $items['admin/config/eme'] = array(
+    'title' => 'EmarketingEye configurations',
+    'description' => 'Administration tools.',
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('access administration pages'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+    );
+
+  return $items;
+}

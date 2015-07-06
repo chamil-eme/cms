@@ -1,0 +1,25 @@
+name = EmarketingEye
+description = Main theme for EmarketingEye CMS
+core = 7.x
+version = 7.x-1
+
+; Image appears on admin/appearance
+screenshot = images/screenshot.png
+
+base theme = zurb_foundation
+
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+regions[header]         = Header
+regions[navigation]     = Navigation
+regions[help]           = Help
+regions[highlighted]    = Highlighted
+regions[content]        = Content
+regions[sidebar_first]  = Left Sidebar
+regions[sidebar_second] = Right Sidebar
+regions[footer_first]   = Footer first
+regions[footer_middle]  = Footer middle
+regions[footer_last]    = Footer last
+
+stylesheets[all][]        = css/eme.generic.css
+stylesheets[all][]        = css/eme.custom.css

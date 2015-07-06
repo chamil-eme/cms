@@ -1,0 +1,11 @@
+name = EMarketingEye Core
+description = A core set of utilities and features typically required by eme contrib. Also, wraps around core Drupal modules in a non-obtrusive way.
+core = 7.x
+version = 7.x.1
+package  = eme
+
+;Authors
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+
+;Dependent Modules

@@ -1,0 +1,312 @@
+/**
+  * @file
+  * Provides styles generic and applicable across the entire Starhub site.
+  * And could potentially be re-used in other themes.
+  */
+  
+  /**
+    * @section tag_cloud
+    * Tag Cloud CSS
+    */
+    .tagcloud {
+      padding: 5px;
+      line-height: 2.5em;
+      text-align: center;
+      margin: 0;
+    }
+    .tagcloud li {
+      display:inline-block;
+      *display:inline;
+      zoom:1;
+      margin:0 10px;
+      line-height: 2.5em;
+    }
+    [class*="tagcloud"] a {
+      padding: 5px 10px;
+      background-color: rgba(0,0,0,0.2);
+      border-radius: 5px;
+      color: white;
+      text-shadow: 1px 2px 0 black;
+      box-shadow: inset 0 0 8px 1px #a2a2a2;
+      border-bottom:2px solid white;
+    }
+    [class*="tagcloud"] a:hover {
+      background-color: rgba(0,0,0,0.4);
+      text-decoration: none;
+      box-shadow: inset 0 0 8px 1px #6f6f6f;
+    }
+    [class*="tagcloud"].active a, [class*="tagcloud"].active a:hover {
+      background-color: #68C325;
+      text-decoration: none;
+      box-shadow: inset 0 0 8px 1px #6f6f6f;
+    }
+    .tagcloud1 {
+      font-size: 0.7em; font-weight: 100;
+    }
+    .tagcloud2 {
+      font-size: 0.8em; font-weight: 200;
+    }
+    .tagcloud3 {
+      font-size: 0.9em; font-weight: 300;
+    }
+    .tagcloud4 {
+      font-size: 1.0em; font-weight: 400;
+    }
+    .tagcloud5 {
+      font-size: 1.2em; font-weight: 500;
+    }
+    .tagcloud6 {
+      font-size: 1.4em; font-weight: 600;
+    }
+    .tagcloud7 {
+      font-size: 1.6em; font-weight: 700;
+    }
+    .tagcloud8 {
+      font-size: 1.8em; font-weight: 800;
+    }
+    .tagcloud9 {
+      font-size: 2.2em; font-weight: 900;
+    }
+    .tagcloud10 {
+      font-size: 2.5em; font-weight: 900;
+    }
+    
+    /**
+      * @section stat_item
+      * Stat item CSS
+      */
+    .stat-item {
+      text-align: center;
+      padding: 15px 7px;
+    }
+    .stat-item i {
+      display: inline;
+      background-image: none;
+      margin-top: 5px;
+    }
+    .stat-item .stat-value {
+      display: block;
+      margin-top: 17px;
+      font-size: 17px;
+      font-weight: bold;
+    }
+    
+    /**
+      * @section item_assessment
+      * Assessment item
+      */
+    .item-list li.item-assessment {
+      padding: 5px 0;
+      border-bottom: 1px dashed #ccc;
+    }
+    .item-list li.item-assessment:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .item-list li.item-assessment:after {
+      clear: both;
+      display:block;
+    }
+    .item-assessment ul {
+      position: relative;
+    }
+    .item-assessment li.item-price {
+      width:50px;
+      position: absolute;
+      left:0;
+      top:0;
+    }
+    .item-assessment li.item-image {
+      width:50px;
+      position:absolute;
+      right:0;
+      top:0;
+    }
+    .item-assessment li.item-image img {
+      border-radius: 4px;
+      -webkit-border-radius:4px;
+      -moz-border-radius: 4px;
+    }
+    .item-assessment li.item-details {
+      display: block;
+      margin:0 50px 0 50px;
+      padding: 0 10px 0 10px;
+    }
+    .item-assessment .assessment-actions {
+      margin: 0 50px;
+    }
+    .item-assessment li.item-price .price-text {
+      font-size: 16px;
+      color: #00609B;
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 3px;
+      margin-top: 12px;
+    }
+    .item-assessment.assessment-done, .item-assessment.assessment-purchased {
+      position:relative;
+    }
+    .item-assessment.assessment-done .item-list, .item-assessment.assessment-purchased .item-list {
+      opacity: 0.5;
+    }
+    .item-assessment.assessment-done .assessment-actions, .item-assessment.assessment-purchased .assessment-actions {
+      display:none;
+    }
+    .item-assessment .assessment-done, .item-assessment .assessment-purchased {
+      display:block;
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: url('../images/background_stripes.gif') center center repeat;
+      text-align:right;
+      padding:5px;
+    }
+    .item-assessment .btn {
+      padding: 3px 5px;
+      margin-bottom: 5px;
+    }
+    
+    .section-panel {
+      border-top: 3px dashed #CCC;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    .section-panel:last-child {
+      border-bottom: 3px dashed #CCC;
+    }
+    
+    /** Teamie Calendar **/
+    .teamie-calendar {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      color: #272727;
+      line-height: 1;
+      border: 1px solid #CCC;
+      background-color: white;
+    }
+    .teamie-calendar .calendar-month-header {
+      padding: 20px;
+      text-align: center;
+      background: url(../images/bg_top.jpg) 0 100% repeat-x #f6f6f6;
+    }
+    .teamie-calendar .calendar-month-name {
+      font-size: 18px;
+      font-family: 'Open Sans Condensed', sans-serif;
+      position: relative;
+    }
+    .teamie-calendar .calendar-month-name a {
+      color: inherit;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .teamie-calendar .calendar-month-name a.calendar-prev-month {
+      position: absolute;
+      left: 20px;
+    }
+    .teamie-calendar .calendar-month-name a.calendar-next-month {
+      position: absolute;
+      right: 20px;
+    }
+    .teamie-calendar .calendar-day-name {
+      text-align: left;
+      margin: 0 20px;
+    }
+    .teamie-calendar .calendar-day-name h1 {
+      font-size: 35px !important;
+      float: left;
+      font-family: 'Open Sans Condensed', sans-serif;
+      text-transform: uppercase;
+      margin: 20px 0 10px 0;
+      font-weight: bold !important;
+      color: inherit;
+    }
+    .teamie-calendar .calendar-div-month {
+      width: 50px;
+      float: left;
+      text-align: center;
+      margin-left: 20px;
+      margin-top: 20px;
+    }
+    .teamie-calendar .calendar-div-month .calendar-inline-month {
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+    .teamie-calendar .calendar-div-month .calendar-inline-day {
+      font-size: 20px;
+    }
+    .teamie-calendar .calendar-list {
+      min-height: 100px;
+      background: #f4f4f4;
+      text-align: left;
+      padding: 10px;
+      clear: left;
+    }
+    .teamie-calendar .calendar-list ul {
+      list-style: none;
+      margin: 0;
+    }
+    .teamie-calendar .calendar-list ul li {
+      min-height: 41px;
+      padding: 11px;
+      font-family: 'Open Sans Condensed', sans-serif;
+      cursor: pointer;
+      background: none;
+      line-height: normal;
+      list-style: none;
+    }
+    .teamie-calendar .calendar-list ul li .time {
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      color: #F6F6F6;
+      font-size: 16px;
+      padding: 10px;
+      float: left;
+      font-weight: bold;
+      line-height: 100%;
+      background: #c6cf52;
+      border: 1px solid #b9c14c;
+      margin:0 10px 10px 0;
+    }
+    .teamie-calendar .calendar-list ul li h1 {
+      font-size: 16px;
+      margin: 0 0 0 10px;
+      font-weight: normal;
+      color: inherit;
+      clear: none;
+      line-height: 100%;
+    }
+    .teamie-calendar .calendar-list ul li p {
+      margin: 10px 0 0 0;
+      font-size: 12px;
+      line-height: 100%;
+      color: #6f6f6f;
+    }
+    .teamie-calendar .calendar-div-dates {
+      padding: 10px;
+    }
+    .teamie-calendar .calendar-div-dates li {
+      background: none;
+      padding: 5px;
+      line-height: 100% !important;
+      width: 18px;
+      font-size: 13px;
+      color: #929292;
+      float: left;
+      font-family: 'Open Sans Condensed', sans-serif;
+      padding-top: 10px;
+      list-style: none;
+    }
+    .teamie-calendar .calendar-div-dates li.active {
+      background: url(../images/hover_dates.png) no-repeat 50% 0;
+      color: #000;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .teamie-calendar .calendar-div-dates li.has-events {
+      background: url(../images/hover_dates_has_event.png) no-repeat 50% 0;
+      color: #3679B5 !important;
+    }
