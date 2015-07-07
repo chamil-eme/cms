@@ -3,6 +3,9 @@ description = Megamenu solutions for Drupal
 package = tb_megamenu
 version = VERSION
 core = 7.x
+dependencies[] = ctools
+dependencies[] = uuid
+dependencies[] = entity_menu_links
 
 files[] = tb_megamenu.functions.inc
 files[] = tb_megamenu.themes.inc

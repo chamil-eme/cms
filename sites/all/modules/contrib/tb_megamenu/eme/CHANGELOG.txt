@@ -1,0 +1,203 @@
+Patch for enable features export to tb_megamenu
+https://www.drupal.org/node/2028545
+
+diff --git a/sites/all/modules/contrib/features/includes/features.menu.inc b/sites/all/modules/contrib/features/includes/features.menu.inc
+index c883e6a..fb13ecd 100644
+--- a/sites/all/modules/contrib/features/includes/features.menu.inc
++++ b/sites/all/modules/contrib/features/includes/features.menu.inc
+@@ -364,8 +364,15 @@ function features_menu_link_load($identifier) {
+$clean_title = '';
+list($menu_name, $link_path) = explode(':', $identifier, 2);
+}
++
++  $fields = array('menu_name', 'mlid', 'plid', 'link_path', 'router_path', 'link_title', 'options', 'module', 'hidden', 'external', 'has_children', 'expanded', 'weight', 'customized');
++
++  if(module_exists('entity_menu_links') && module_exists('uuid')) {
++    $fields[] = 'uuid';
++  }
++
+$links = db_select('menu_links')
+-    ->fields('menu_links', array('menu_name', 'mlid', 'plid', 'link_path', 'router_path', 'link_title', 'options', 'module', 'hidden', 'external', 'has_children', 'expanded', 'weight', 'customized'))
++    ->fields('menu_links', $fields)
+->condition('menu_name', $menu_name)
+->condition('link_path', $link_path)
+->addTag('features_menu_link')
+@@ -393,8 +400,15 @@ function features_menu_link_load($identifier) {
+// If link_path was changed on an existing link, we need to find it by
+// searching for link_title.
+else if (isset($clean_title)) {
++
++    $fields = array('menu_name', 'mlid', 'plid', 'link_path', 'router_path', 'link_title', 'options', 'module', 'hidden', 'external', 'has_children', 'expanded', 'weight');
++
++    if(module_exists('entity_menu_links') && module_exists('uuid')) {
++      $fields[] = 'uuid';
++    }
++
+$links = db_select('menu_links')
+-    ->fields('menu_links', array('menu_name', 'mlid', 'plid', 'link_path', 'router_path', 'link_title', 'options', 'module', 'hidden', 'external', 'has_children', 'expanded', 'weight'))
++    ->fields('menu_links', $fields)
+->condition('menu_name', $menu_name)
+->execute()
+->fetchAllAssoc('mlid');
+diff --git a/sites/all/modules/contrib/tb_megamenu/tb_megamenu.functions.inc b/sites/all/modules/contrib/tb_megamenu/tb_megamenu.functions.inc
+index 48146d1..f0a7580 100644
+--- a/sites/all/modules/contrib/tb_megamenu/tb_megamenu.functions.inc
++++ b/sites/all/modules/contrib/tb_megamenu/tb_megamenu.functions.inc
+@@ -140,6 +140,7 @@ function tb_megamenu_get_tree($menu_name) {
+$links = array();
+foreach ($result as $item) {
+$item['href'] = $item['link_path'];
++      $item['mlid'] = $item['uuid'];
+$links[] = $item;
+}
+$items = menu_tree_data($links);
+diff --git a/sites/all/modules/contrib/tb_megamenu/tb_megamenu.info b/sites/all/modules/contrib/tb_megamenu/tb_megamenu.info
+index a798304..ffc2699 100644
+--- a/sites/all/modules/contrib/tb_megamenu/tb_megamenu.info
++++ b/sites/all/modules/contrib/tb_megamenu/tb_megamenu.info
+@@ -3,6 +3,9 @@ description = Megamenu solutions for Drupal
+package = tb_megamenu
+version = VERSION
+core = 7.x
++dependencies[] = ctools
++dependencies[] = uuid
++dependencies[] = entity_menu_links
+
+files[] = tb_megamenu.functions.inc
+files[] = tb_megamenu.themes.inc
+diff --git a/sites/all/modules/contrib/tb_megamenu/tb_megamenu.install b/sites/all/modules/contrib/tb_megamenu/tb_megamenu.install
+index 2192991..9ccbd7c 100644
+--- a/sites/all/modules/contrib/tb_megamenu/tb_megamenu.install
++++ b/sites/all/modules/contrib/tb_megamenu/tb_megamenu.install
+@@ -1,19 +1,25 @@
+<?php
+
+-function tb_megamenu_install() {
+-}
+-
+-function tb_megamenu_uninstall() {
+-  drupal_uninstall_schema('tb_megamenu');
+-}
+-
+/**
+- * Implementation of hook_schema().
++ * Implements hook_schema().
+*/
+function tb_megamenu_schema() {
+$schema = array();
+-
+$schema['tb_megamenus'] = array(
++    'description' => t('Table storing menu definitions.'),
++    // This is all the CTools Exportables block.
++    'export' => array(
++      // Unique key to identify an object.
++      'key' => 'menu_name',
++      'key name' => 'Menu Name',
++      'default hook' => 'tb_megamenu_export',
++      'api' => array(
++        'owner' => 'tb_megamenu',
++        'api' => 'tb_megamenu',
++        'minimum_version' => 1,
++        'current_version' => 1,
++      ),
++    ),
+'fields' => array(
+'menu_name' => array(
+'type' => 'varchar',
+@@ -22,11 +28,9 @@ function tb_megamenu_schema() {
+),
+'block_config' => array(
+'type' => 'text',
+-        'not null' => FALSE,
+),
+'menu_config' => array(
+'type' => 'text',
+-        'not null' => FALSE,
+),
+),
+'primary key' => array('menu_name'),
+diff --git a/sites/all/modules/contrib/tb_megamenu/tb_megamenu.module b/sites/all/modules/tb_megamenu/tb_megamenu.module
+index 113590b..8aafcef 100644
+--- a/sites/all/modules/contrib/tb_megamenu/tb_megamenu.module
++++ b/sites/all/modules/contrib/tb_megamenu/tb_megamenu.module
+@@ -292,4 +292,25 @@ function tb_megamenu_block_view_alter(&$data, $block) {
+$data['content']['#contextual_links']['tb_megamenu_config'] = $contextual_links;
+
+}
+\ No newline at end of file
++}
++
++/**
++ * Implements hook_features_revert().
++ */
++function tb_megamenus_features_revert($module) {
++  tb_megamenus_features_rebuild($module);
++}
++
++/**
++ * Implements hook_features_rebuild().
++ */
++function tb_megamenus_features_rebuild($module) {
++  $tb_megamenus = module_invoke($module, 'tb_megamenu_export');
++
++  foreach ($tb_megamenus as $key => $tb_megamenu) {
++    db_merge('tb_megamenus')
++    ->key(array('menu_name' => $tb_megamenu->menu_name))
++    ->fields(array('menu_config' => $tb_megamenu->menu_config, 'block_config' => $tb_megamenu->block_config))
++    ->execute();
++  }
++}
++
+diff --git a/sites/all/modules/contrib/tb_megamenu/tb_megamenu.themes.inc b/sites/all/modules/tb_megamenu/tb_megamenu.themes.inc
+index d9fd93b..65e0922 100644
+--- a/sites/all/modules/contrib/tb_megamenu/tb_megamenu.themes.inc
++++ b/sites/all/modules/contrib/tb_megamenu/tb_megamenu.themes.inc
+@@ -83,13 +83,14 @@ function template_preprocess_tb_megamenu_nav(&$vars) {
+function template_preprocess_tb_megamenu_item(&$vars) {
+$level = $vars['level'];
+$item = $vars['item'];
++  $uuid = $item['link']['uuid'];
+$mlid = $item['link']['mlid'];
+$trail = $vars['trail'];
+$menu_config = $vars['menu_config'];
+-  $item_config = isset($menu_config[$mlid]['item_config']) ? $menu_config[$mlid]['item_config'] : array();
++  $item_config = isset($menu_config[$uuid]['item_config']) ? $menu_config[$uuid]['item_config'] : array();
+tb_megamenu_edit_item_config($item_config);
+$vars['item_config'] = $item_config;
+-  if(isset($menu_config[$mlid]['rows_content']) && !empty($menu_config[$mlid]['rows_content'])
++  if(isset($menu_config[$uuid]['rows_content']) && !empty($menu_config[$uuid]['rows_content'])
+&& ($vars['section'] == 'backend' || !$item_config['hidesub'])) {
+$vars['submenu'] = theme('tb_megamenu_submenu', array(
+'menu_name' => $vars['menu_name'],
+@@ -134,7 +135,7 @@ function template_preprocess_tb_megamenu_item(&$vars) {
+if(isset($trail[$mlid])) {
+$vars['classes_array'][] = 'active';
+}
+-  $vars['attributes_array']['data-id'] = $mlid;
++  $vars['attributes_array']['data-id'] = $uuid;
+$vars['attributes_array']['data-level'] = $level;
+$vars['attributes_array']['data-type'] = 'menu_item';
+$vars['attributes_array']['data-class'] = $item_config['class'];
+@@ -151,9 +152,9 @@ function template_preprocess_tb_megamenu_item(&$vars) {
+
+function template_preprocess_tb_megamenu_submenu(&$vars) {
+$parent = $vars['parent'];
+-  $mlid = $parent['link']['mlid'];
++  $uuid = $parent['link']['uuid'];
+$menu_config = $vars['menu_config'];
+-  $item_config = isset($menu_config[$mlid]) ? $menu_config[$mlid] : array();
++  $item_config = isset($menu_config[$uuid]) ? $menu_config[$uuid] : array();
+$submenu_config = isset($item_config['submenu_config']) ? $item_config['submenu_config'] : array();
+$vars['submenu_config'] = $submenu_config;
+tb_megamenu_edit_submenu_config($submenu_config);
+@@ -265,8 +266,8 @@ function template_preprocess_tb_megamenu_subnav(&$vars) {
+$items = $vars['items'];
+$level = $vars['level'];
+$lis = array();
+-  foreach($col as $tb_item) {
+-    $item = tb_megamenu_get_menu_item($vars['menu_name'], $tb_item['mlid']);
++  foreach($items as $tb_item) {
++    $item = tb_megamenu_get_menu_item($vars['menu_name'], $tb_item['link']['uuid']);
+$lis[] = theme('tb_megamenu_item', array(
+'menu_name' => $vars['menu_name'],
+'level' => $level + 1,

@@ -13,34 +13,34 @@ function tb_megamenu_menu() {
     'access arguments' => array('administer tb_megamenu'),
     'type' => MENU_SUGGESTED_ITEM,
     'file' => 'tb_megamenu.ajax.inc',
-  );    
+    );
 
   $items['admin/structure/tb-megamenu'] = array(
-    'title' => 'TB Mega Menu', 
+    'title' => 'TB Mega Menu',
     'description' => t('TB Mega Menu'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tb_megamenu_admin_settings'),
     'access arguments' => array('administer tb_megamenu'),
-    'file' => 'tb_megamenu.admin.inc', 
-  );
+    'file' => 'tb_megamenu.admin.inc',
+    );
 
   $items['admin/structure/tb-megamenu/%tb_megamenu_menu_name'] = array(
-    'title' => 'Config TB Mega Menu', 
-    'description' => t('Config TB Mega Menu'), 
-    'page callback' => 'drupal_get_form', 
+    'title' => 'Config TB Mega Menu',
+    'description' => t('Config TB Mega Menu'),
+    'page callback' => 'drupal_get_form',
     'page arguments' => array ('tb_megamenu_configure_form', 3),
     'access arguments' => array(3),
     'type' => MENU_CALLBACK,
     'access arguments' => array('administer tb_megamenu'),
-    'file' => 'tb_megamenu.admin.inc', 
-  );
+    'file' => 'tb_megamenu.admin.inc',
+    );
 
   $items['admin/structure/tb-megamenu/%tb_megamenu_menu_name/config'] = array(
     'title' => 'Config TB Mega Menu',
     'weight' => -10,
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
-  );
+    );
   return $items;
 }
 
@@ -48,8 +48,8 @@ function tb_megamenu_permission() {
   return array(
     'administer tb_megamenu' => array(
       'title' => t('Administer TB Mega Menu'),
-    ),
-  );
+      ),
+    );
 }
 
 function tb_megamenu_theme($existing, $type, $theme, $path) {
@@ -59,14 +59,14 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
       'menu_name' => NULL,
       'content' => NULL,
       'section' => 'frontend',
-    ),
+      ),
     'template' => 'tb-megamenu',
     'path' => $path . '/templates',
     'preprocess functions' => array(
       'template_preprocess',
       'template_preprocess_tb_megamenu',
-    ),    
-  );
+      ),
+    );
 
   $items['tb_megamenu_nav'] = array(
     'variables' => array(
@@ -77,14 +77,14 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
       'block_config' => NULL,
       'trail' => NULL,
       'section' => 'frontend',
-    ), 
+      ),
     'template' => 'tb-megamenu-nav',
     'path' => $path . '/templates',
     'preprocess functions' => array(
       'template_preprocess',
       'template_preprocess_tb_megamenu_nav',
-    ),
-  );
+      ),
+    );
 
   $items['tb_megamenu_item'] = array(
     'variables' => array(
@@ -97,14 +97,14 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
       'trail' => NULL,
       'submenu' => NULL,
       'section' => 'frontend',
-    ), 
+      ),
     'template' => 'tb-megamenu-item',
     'path' => $path . '/templates',
     'preprocess functions' => array(
       'template_preprocess',
       'template_preprocess_tb_megamenu_item',
-    ),
-  );
+      ),
+    );
 
   $items['tb_megamenu_submenu'] = array(
     'variables' => array(
@@ -115,14 +115,14 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
       'block_config' => NULL,
       'trail' => NULL,
       'section' => 'frontend',
-    ),
+      ),
     'template' => 'tb-megamenu-submenu',
     'path' => $path . '/templates',
     'preprocess functions' => array(
       'template_preprocess',
       'template_preprocess_tb_megamenu_submenu',
-    ),
-  );
+      ),
+    );
 
   $items['tb_megamenu_row'] = array(
     'variables' => array(
@@ -134,14 +134,14 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
       'block_config' => NULL,
       'trail' => NULL,
       'section' => 'frontend',
-    ),
+      ),
     'template' => 'tb-megamenu-row',
     'path' => $path . '/templates',
     'preprocess functions' => array(
       'template_preprocess',
       'template_preprocess_tb_megamenu_row',
-    ),
-  );
+      ),
+    );
 
   $items['tb_megamenu_column'] = array(
     'variables' => array(
@@ -153,14 +153,14 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
       'block_config' => NULL,
       'trail' => NULL,
       'section' => 'frontend',
-    ),
+      ),
     'template' => 'tb-megamenu-column',
     'path' => $path . '/templates',
     'preprocess functions' => array(
       'template_preprocess',
       'template_preprocess_tb_megamenu_column',
-    ),
-  );
+      ),
+    );
 
   $items['tb_megamenu_subnav'] = array(
     'variables' => array(
@@ -172,14 +172,14 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
       'block_config' => NULL,
       'trail' => NULL,
       'section' => 'frontend',
-    ), 
+      ),
     'template' => 'tb-megamenu-subnav',
     'path' => $path . '/templates',
     'preprocess functions' => array(
       'template_preprocess',
       'template_preprocess_tb_megamenu_subnav',
-    ),
-  );
+      ),
+    );
 
   $items['tb_megamenu_block'] = array(
     'variables' => array(
@@ -187,32 +187,32 @@ function tb_megamenu_theme($existing, $type, $theme, $path) {
       'block_key' => NULL,
       'section' => 'frontend',
       'showblocktitle' => 1,
-    ), 
+      ),
     'template' => 'tb-megamenu-block',
     'path' => $path . '/templates',
     'preprocess functions' => array(
       'template_preprocess',
       'template_preprocess_tb_megamenu_block',
-    ),
-  );
+      ),
+    );
 
   $items['tb_megamenu_admin_settings'] = array(
     'render element' => 'form',
-  );
+    );
 
   $items['tb_megamenu_backend'] = array(
     'variables' => array(
       'blocks' => NULL,
       'menu_name' => NULL,
       'menu_content' => NULL,
-    ),
+      ),
     'template' => 'tb-megamenu-backend',
     'path' => $path . '/templates/backend',
     'preprocess functions' => array(
       'template_preprocess',
       'template_preprocess_tb_megamenu_backend',
-    ),    
-  );
+      ),
+    );
 
   return $items;
 }
@@ -227,7 +227,7 @@ function tb_megamenu_block_view($delta = 0) {
     if(module_exists('fontawesome') && file_exists(libraries_get_path('fontawesome') . '/css/font-awesome.css')) {
       tb_megamenu_add_css(libraries_get_path('fontawesome') . '/css/font-awesome.css');
     }
-    
+
     tb_megamenu_add_css(drupal_get_path('module', 'tb_megamenu') . '/css/bootstrap.css');
     tb_megamenu_add_css(drupal_get_path('module', 'tb_megamenu') . '/css/base.css');
     tb_megamenu_add_css(drupal_get_path('module', 'tb_megamenu') . '/css/default.css');
@@ -238,7 +238,7 @@ function tb_megamenu_block_view($delta = 0) {
   return array('content' => array(
     '#type' => 'markup',
     '#markup' =>  theme('tb_megamenu', array('menu_name' => $delta))
-  ));
+    ));
 }
 
 /*
@@ -249,8 +249,8 @@ function tb_megamenu_block_info() {
   $blocks = array();
   foreach($menus as $menu) {
     $blocks[$menu->menu_name] = array(
-      'info' => t('TB Mega Menu') . ': ' . $menu->title, 'cache' => DRUPAL_NO_CACHE 
-    );
+      'info' => t('TB Mega Menu') . ': ' . $menu->title, 'cache' => DRUPAL_NO_CACHE
+      );
   }
   return $blocks;
 }
@@ -280,16 +280,37 @@ function tb_megamenu_block_view_alter(&$data, $block) {
     $contextual_links = array(
       'admin/structure/menu/manage',
       array($block->delta),
-    );
+      );
 
     $data['content']['#contextual_links']['menu_config'] = $contextual_links;
 
     $contextual_links = array(
       'admin/structure/tb-megamenu',
       array($block->delta),
-    );
+      );
 
     $data['content']['#contextual_links']['tb_megamenu_config'] = $contextual_links;
-    
+
+  }
+}
+
+/**
+ * Implements hook_features_revert().
+ */
+function tb_megamenus_features_revert($module) {
+  tb_megamenus_features_rebuild($module);
+}
+
+/**
+ * Implements hook_features_rebuild().
+ */
+function tb_megamenus_features_rebuild($module) {
+  $tb_megamenus = module_invoke($module, 'tb_megamenu_export');
+
+  foreach ($tb_megamenus as $key => $tb_megamenu) {
+    db_merge('tb_megamenus')
+    ->key(array('menu_name' => $tb_megamenu->menu_name))
+    ->fields(array('menu_config' => $tb_megamenu->menu_config, 'block_config' => $tb_megamenu->block_config))
+    ->execute();
   }
 }

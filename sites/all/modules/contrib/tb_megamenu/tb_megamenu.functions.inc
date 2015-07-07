@@ -20,13 +20,13 @@ function tb_megamenu_add_css($file) {
     drupal_add_css($css_uri . "/" . $path_info['filename'] . ".css", array(
       'group' => CSS_DEFAULT,
       'basename' => 'tb-megamenu-' . $path_info['filename'] . ".css",
-    ));
+      ));
   }
   else {
     drupal_add_css($file, array(
       'group' => CSS_DEFAULT,
       'basename' => 'tb-megamenu-' . $path_info['basename'],
-    ));
+      ));
   }
 }
 
@@ -132,14 +132,15 @@ function tb_megamenu_get_tree($menu_name) {
   if(!isset($trees[$menu_name])) {
     global $menu_admin;
     $sql = "
-      SELECT m.load_functions, m.to_arg_functions, m.access_callback, m.access_arguments, m.page_callback, m.page_arguments, m.delivery_callback, m.title, m.title_callback, m.title_arguments, m.type, m.description, ml.*
-      FROM {menu_links} ml LEFT JOIN {menu_router} m ON m.path = ml.router_path
-      WHERE ml.menu_name = :menu
-      ORDER BY p1 ASC, p2 ASC, p3 ASC, p4 ASC, p5 ASC, p6 ASC, p7 ASC, p8 ASC, p9 ASC";
+    SELECT m.load_functions, m.to_arg_functions, m.access_callback, m.access_arguments, m.page_callback, m.page_arguments, m.delivery_callback, m.title, m.title_callback, m.title_arguments, m.type, m.description, ml.*
+    FROM {menu_links} ml LEFT JOIN {menu_router} m ON m.path = ml.router_path
+    WHERE ml.menu_name = :menu
+    ORDER BY p1 ASC, p2 ASC, p3 ASC, p4 ASC, p5 ASC, p6 ASC, p7 ASC, p8 ASC, p9 ASC";
     $result = db_query($sql, array(':menu' => $menu_name), array('fetch' => PDO::FETCH_ASSOC));
     $links = array();
     foreach ($result as $item) {
       $item['href'] = $item['link_path'];
+      $item['mlid'] = $item['uuid'];
       $links[] = $item;
     }
     $items = menu_tree_data($links);
@@ -157,7 +158,7 @@ function tb_megamenu_get_menu_item($menu_name, $mlid) {
   $tree = tb_megamenu_get_tree($menu_name);
   if (function_exists('i18n_menu_localize_tree')) {
     $tree = i18n_menu_localize_tree($tree);
-  } 
+  }
   $item = tb_megamenu_find_menu_item($tree, $mlid);
   return $item;
 }
@@ -212,7 +213,7 @@ function tb_megamenu_block_content_exists($block_key, $section) {
 
 function tb_megamenu_sync_config($items, &$item_config, $_mlid, $section) {
   if(empty($item_config['rows_content'])) {
-    $item_config['rows_content'] = array(0 => array(0 => array('col_content' => array(), 'col_config' => array()))); 
+    $item_config['rows_content'] = array(0 => array(0 => array('col_content' => array(), 'col_config' => array())));
     foreach($items as $item) {
       $mlid = $item['link']['mlid'];
       if(!$item['link']['hidden']) {
@@ -221,7 +222,7 @@ function tb_megamenu_sync_config($items, &$item_config, $_mlid, $section) {
           'mlid' => $mlid,
           'tb_item_config' => array(),
           'weight' => $item['link']['weight'],
-        );
+          );
       }
     }
     if(empty($item_config['rows_content'][0][0]['col_content'])) {
@@ -261,7 +262,7 @@ function tb_megamenu_sync_config($items, &$item_config, $_mlid, $section) {
               }
               if(empty($item_config['rows_content'][$i])) {
                 unset($item_config['rows_content'][$i]);
-              }              
+              }
             }
           }
         }
@@ -307,19 +308,19 @@ function tb_megamenu_insert_tb_item(&$item_config, $row, $col, $item) {
     'type' => 'menu_item',
     'weight' => $item['link']['weight'],
     'tb_item_config' => array(),
-  );
+    );
 }
 
 function tb_megamenu_array_to_object($array) {
   $obj = new stdClass;
   foreach($array as $k => $v) {
-     if(is_array($v)) {
-        $obj->{$k} = tb_megamenu_array_to_object($v);
-     } else {
-        $obj->{$k} = $v;
-     }
+   if(is_array($v)) {
+    $obj->{$k} = tb_megamenu_array_to_object($v);
+  } else {
+    $obj->{$k} = $v;
   }
-  return $obj;
+}
+return $obj;
 }
 
 function tb_megamenu_edit_item_config(&$item_config) {
@@ -395,7 +396,7 @@ function tb_megamenu_edit_block_config(&$block_config) {
   if(!isset($block_config['off-canvas'])) {
     $block_config['off-canvas'] = 0;
   }
-  
+
 }
 
 function tb_megamenu_render_block($delta = 0) {
@@ -404,7 +405,7 @@ function tb_megamenu_render_block($delta = 0) {
   $block = array('content' => array(
     '#type' => 'markup',
     '#markup' => theme('tb_megamenu', array('menu_name' => $delta, 'section' => 'backend',)),
-  ));
+    ));
   drupal_add_js('Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};', array('type' => 'inline'));
   drupal_add_js('Drupal.TBMegaMenu.TBElementsCounter = ' . json_encode($tb_elements_counter), array('type' => 'inline'));
   drupal_add_js('Drupal.TBMegaMenu.TBElementsCounter = ' . json_encode($tb_elements_counter), array('type' => 'inline'));
@@ -430,8 +431,8 @@ function tb_megamenu_style_options($block_config) {
     '' => t('Default'),
     'black' => t('Black'),
     'blue' => t('Blue'),
-    'green' => t('Green'), 
-  );
+    'green' => t('Green'),
+    );
   $options = array();
   foreach($styles as $value => $title) {
     if($value == $block_config['style']) {
@@ -469,7 +470,7 @@ function tb_megamenu_find_hook_templates($cache, $path) {
         'template' => $template,
         'path' => dirname($file->uri),
         'includes' => isset($cache[$hook]['includes']) ? $cache[$hook]['includes'] : NULL,
-      );
+        );
     }
     // Ensure that the pattern is maintained from base themes to its sub-themes.
     // Each sub-theme will have their templates scanned so the pattern must be
@@ -499,7 +500,7 @@ function tb_megamenu_find_hook_templates($cache, $path) {
             'render element' => isset($info['render element']) ? $info['render element'] : NULL,
             'base hook' => $hook,
             'includes' => isset($info['includes']) ? $info['includes'] : NULL,
-          );
+            );
         }
       }
     }
@@ -525,17 +526,17 @@ function tb_megamenu_is_a_key($str) {
 
 function tb_megamenu_replace_css() {
   $files = array(
-    drupal_get_path('module', 'tb_megamenu') . '/css/admin.css', 
-    drupal_get_path('module', 'tb_megamenu') . '/css/backend.css', 
-    drupal_get_path('module', 'tb_megamenu') . '/css/base.css', 
-    drupal_get_path('module', 'tb_megamenu') . '/css/bootstrap.css', 
-    drupal_get_path('module', 'tb_megamenu') . '/css/bootstrap-responsive.css', 
-    drupal_get_path('module', 'tb_megamenu') . '/css/default.css', 
-    drupal_get_path('module', 'tb_megamenu') . '/css/styles/black.css', 
-    drupal_get_path('module', 'tb_megamenu') . '/css/styles/blue.css', 
-    drupal_get_path('module', 'tb_megamenu') . '/css/styles/green.css', 
-    drupal_get_path('module', 'tb_megamenu') . '/css/styles/orange.css', 
-  );
+    drupal_get_path('module', 'tb_megamenu') . '/css/admin.css',
+    drupal_get_path('module', 'tb_megamenu') . '/css/backend.css',
+    drupal_get_path('module', 'tb_megamenu') . '/css/base.css',
+    drupal_get_path('module', 'tb_megamenu') . '/css/bootstrap.css',
+    drupal_get_path('module', 'tb_megamenu') . '/css/bootstrap-responsive.css',
+    drupal_get_path('module', 'tb_megamenu') . '/css/default.css',
+    drupal_get_path('module', 'tb_megamenu') . '/css/styles/black.css',
+    drupal_get_path('module', 'tb_megamenu') . '/css/styles/blue.css',
+    drupal_get_path('module', 'tb_megamenu') . '/css/styles/green.css',
+    drupal_get_path('module', 'tb_megamenu') . '/css/styles/orange.css',
+    );
   foreach($files as $css_file) {
     $output = array();
     $f = fopen($css_file, "r");

@@ -10,21 +10,21 @@ function menu_features_api() {
       'default_hook' => 'menu_default_menu_custom',
       'feature_source' => TRUE,
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
-    ),
+      ),
     'menu_links' => array(
       'name' => t('Menu links'),
       'default_hook' => 'menu_default_menu_links',
       'feature_source' => TRUE,
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
-    ),
+      ),
     // DEPRECATED
     'menu' => array(
       'name' => t('Menu items'),
       'default_hook' => 'menu_default_items',
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
       'feature_source' => FALSE,
-    ),
-  );
+      ),
+    );
 }
 
 /**
@@ -87,10 +87,10 @@ function menu_custom_features_export_render($module, $data) {
   $translatables = array();
   foreach ($data as $menu_name) {
     $row = db_select('menu_custom')
-      ->fields('menu_custom')
-      ->condition('menu_name', $menu_name)
-      ->execute()
-      ->fetchAssoc();
+    ->fields('menu_custom')
+    ->condition('menu_name', $menu_name)
+    ->execute()
+    ->fetchAssoc();
     if ($row) {
       $export = features_var_export($row, '  ');
       $code[] = "  // Exported menu: {$menu_name}.";
@@ -245,8 +245,8 @@ function menu_links_features_export_render($module, $data, $export = NULL) {
         menu_link_save($temp);
       }
 
-       unset($link['plid']);
-       unset($link['mlid']);
+      unset($link['plid']);
+      unset($link['mlid']);
 
       $code[] = "  // Exported menu link: {$new_identifier}";
       $code[] = "  \$menu_links['{$new_identifier}'] = ". features_var_export($link, '  ') .";";
@@ -336,14 +336,14 @@ function menu_links_features_rebuild_ordered($menu_links, $reset = FALSE) {
       }
       // This if for backwards compatibility.
       elseif (!empty($link['parent_path']) && $parent = features_menu_link_load("{$link['menu_name']}:{$link['parent_path']}")) {
-         $link['plid'] = $parent['mlid'];
-       }
-      else {
-        $link['plid'] = 0;
-      }
-      menu_link_save($link);
+       $link['plid'] = $parent['mlid'];
+     }
+     else {
+      $link['plid'] = 0;
     }
+    menu_link_save($link);
   }
+}
 }
 
 /**
@@ -364,56 +364,73 @@ function features_menu_link_load($identifier) {
     $clean_title = '';
     list($menu_name, $link_path) = explode(':', $identifier, 2);
   }
+
+
+  $fields = array('menu_name', 'mlid', 'plid', 'link_path', 'router_path', 'link_title', 'options', 'module', 'hidden', 'external', 'has_children', 'expanded', 'weight', 'customized');
+
+  if(module_exists('entity_menu_links') && module_exists('uuid')) {
+    $fields[] = 'uuid';
+  }
+
+
   $links = db_select('menu_links')
-    ->fields('menu_links', array('menu_name', 'mlid', 'plid', 'link_path', 'router_path', 'link_title', 'options', 'module', 'hidden', 'external', 'has_children', 'expanded', 'weight', 'customized'))
-    ->condition('menu_name', $menu_name)
-    ->condition('link_path', $link_path)
-    ->addTag('features_menu_link')
-    ->execute()
-    ->fetchAllAssoc('mlid');
+  ->fields('menu_links', $fields)
+  ->condition('menu_name', $menu_name)
+  ->condition('link_path', $link_path)
+  ->addTag('features_menu_link')
+  ->execute()
+  ->fetchAllAssoc('mlid');
 
   foreach($links as $link) {
     $link->options = unserialize($link->options);
 
     // Title or previous identifier matches.
     if ((isset($link->options['identifier']) && strcmp($link->options['identifier'], $identifier) == 0)
-        || (isset($clean_title) && strcmp(features_clean_title($link->link_title), $clean_title) == 0)) {
+      || (isset($clean_title) && strcmp(features_clean_title($link->link_title), $clean_title) == 0)) {
 
       return (array)$link;
-    }
   }
+}
 
   // Only one link with the requested menu_name and link_path does exists,
   // -- providing an upgrade possibility for links saved in a feature before the
   // new identifier-pattern was added.
-  if (count($links) == 1 && empty($clean_title)) {
+if (count($links) == 1 && empty($clean_title)) {
     $link = reset($links); // get the first item
     return (array)$link;
   }
   // If link_path was changed on an existing link, we need to find it by
   // searching for link_title.
   else if (isset($clean_title)) {
-    $links = db_select('menu_links')
-    ->fields('menu_links', array('menu_name', 'mlid', 'plid', 'link_path', 'router_path', 'link_title', 'options', 'module', 'hidden', 'external', 'has_children', 'expanded', 'weight'))
-    ->condition('menu_name', $menu_name)
-    ->execute()
-    ->fetchAllAssoc('mlid');
 
-    foreach($links as $link) {
-      $link->options = unserialize($link->options);
+
+   $fields = array('menu_name', 'mlid', 'plid', 'link_path', 'router_path', 'link_title', 'options', 'module', 'hidden', 'external', 'has_children', 'expanded', 'weight');
+
+   if(module_exists('entity_menu_links') && module_exists('uuid')) {
+    $fields[] = 'uuid';
+  }
+
+  $links = db_select('menu_links')
+  ->fields('menu_links', $fields)
+  ->condition('menu_name', $menu_name)
+  ->execute()
+  ->fetchAllAssoc('mlid');
+
+  foreach($links as $link) {
+    $link->options = unserialize($link->options);
       // Links with a stored identifier must only be matched on that identifier,
       // to prevent cross over assumptions.
-      if (isset($link->options['identifier'])) {
-        if (strcmp($link->options['identifier'], $identifier) == 0) {
-          return (array)$link;
-        }
-      }
-      elseif ((strcmp(features_clean_title($link->link_title), $clean_title) == 0)) {
+    if (isset($link->options['identifier'])) {
+      if (strcmp($link->options['identifier'], $identifier) == 0) {
         return (array)$link;
       }
     }
+    elseif ((strcmp(features_clean_title($link->link_title), $clean_title) == 0)) {
+      return (array)$link;
+    }
   }
-  return FALSE;
+}
+return FALSE;
 }
 
 /**
@@ -421,7 +438,7 @@ function features_menu_link_load($identifier) {
  */
 function features_clean_title($str) {
   return strtolower(preg_replace_callback('/(\s)|([^a-zA-Z\-0-9])/i', create_function(
-          '$matches',
-          'return $matches[1]?"-":"";'
-      ), $str));
+    '$matches',
+    'return $matches[1]?"-":"";'
+    ), $str));
 }
