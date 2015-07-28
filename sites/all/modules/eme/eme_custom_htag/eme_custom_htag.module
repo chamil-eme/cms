@@ -1,0 +1,15 @@
+<?php
+
+define('FIELD_EME_CUSTOM_HTAG', 'field_custom_htag');
+/**
+ * Implements hook_preprocess_page().
+ */
+function eme_custom_htag_preprocess_page(&$vars) {
+
+  if (!empty($vars['node'])) {
+    $items  =  field_get_items('node',$vars['node'],FIELD_EME_CUSTOM_HTAG);
+    if(!empty($items)){
+      $vars['title'] = $items[0]['value'];
+    }
+  }
+}

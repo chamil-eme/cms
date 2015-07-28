@@ -1,0 +1,35 @@
+<?php
+/**
+ * implements hook_form_alter
+ * @see http://drupal.stackexchange.com/questions/34259/difference-between-create-new-and-edit-node-in-form-alter [<description>]
+ * @param  [type] &$form       [description]
+ * @param  [type] &$form_state [description]
+ * @return [type]              [description]
+ */
+function eme_content_order_form_node_form_alter(&$form, &$form_state) {
+  if (!isset($form['field_weight'])){
+    return;
+  }
+  $form['eme_content_order'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Content Order '),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#weight' => 100,
+    '#group' => 'additional_settings',
+    );
+
+  $form['eme_content_order']['field_weight'] = $form['field_weight'];
+  unset($form['field_weight']);
+  $form['#validate'][] = 'eme_content_order_node_form_validate';
+}
+
+/**
+ * validate function add field_weight to form again
+ * @param  [type] &$form       [description]
+ * @param  [type] &$form_state [description]
+ * @return [type]              [description]
+ */
+function eme_content_order_node_form_validate(&$form, &$form_state){
+ $form['field_weight'] = $form['eme_content_order']['field_weight'];
+}

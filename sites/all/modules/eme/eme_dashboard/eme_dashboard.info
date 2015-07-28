@@ -1,0 +1,11 @@
+name = Dashboard
+description = 'Dashboard for add edit content'
+core = 7.x
+version = 7.x.1
+package  = eme
+
+;Authors
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+
+;Dependent Modules

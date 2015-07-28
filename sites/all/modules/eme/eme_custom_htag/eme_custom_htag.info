@@ -1,0 +1,11 @@
+name = Custom h1 tag
+description = Add custom h1 tag to node page
+core = 7.x
+version = 7.x.1
+package  = eme
+
+;Authors
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+
+;Dependent Modules

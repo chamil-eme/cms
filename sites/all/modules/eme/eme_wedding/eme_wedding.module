@@ -1,0 +1,75 @@
+<?php
+/**
+ *  implemts hook_theme
+ * @return type
+ */
+function eme_wedding_theme() {
+  return array(
+    'wedding_left_navigation' => array(
+      'variables' => array(
+        'links' => array()
+        ),
+      'template' => 'templates/left-nav'
+      )
+    );
+
+}
+/**
+ * Implements hook_block_info().
+ */
+function eme_wedding_block_info() {
+  $blocks = array();
+  $blocks['wedding_left_navigation'] = array(
+    'info' => t('Wedding left navigation'),
+    'cache' => DRUPAL_NO_CACHE,
+    'weight' => 0,
+    );
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view().
+ */
+function eme_wedding_block_view($delta = '') {
+
+  $block =  array();
+  switch ($delta) {
+    case 'wedding_left_navigation':
+    $block['content'] = eme_wedding_get_let_nav();
+    $block['weight'] = 0;
+    break;
+  }
+  return $block;
+}
+
+
+function eme_wedding_get_let_nav(){
+
+  if ($node = menu_get_object()) {
+    $active = NULL;
+    $wedding_main_node =  FALSE;
+    if ($node->type=='weddings'){
+      $wrapper = entity_metadata_wrapper('node', $node);
+      $wedding_main_node =$wrapper->field_weddings_main->value();
+    }
+    if ($node->type=='weddings_main'){
+      $wedding_main_node =$node;
+      $active = 'active';
+    }
+    if (!$wedding_main_node){
+      return;
+    }
+
+    $results = views_get_view_result('wedding', 'left_navigation',$wedding_main_node->nid);
+
+    $links = array();
+    $links[] = array('link'=>l($wedding_main_node->title,drupal_get_path_alias('node/'.$wedding_main_node->nid)),'active'=>$active);
+
+    foreach($results as $row) {
+      $links[] = array('link'=>l($row->node_title,drupal_get_path_alias('node/'.$row->nid)),'active'=>$active = ($row->nid==$node->nid)?'active':'');
+    }
+
+    return theme('wedding_left_navigation', array('links' => $links));
+  }
+}

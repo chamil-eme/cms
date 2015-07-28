@@ -1,0 +1,13 @@
+name = Content Order Module for EMarketingEye
+description = This module will add weight filed to each node content type so that it will help to sort the content using this filed.
+package = eme
+core = 7.x
+version = 7.x.1
+
+;Authors
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+
+;Dependent Modules
+dependencies[] = core
+

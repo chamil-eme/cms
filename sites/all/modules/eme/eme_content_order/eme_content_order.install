@@ -1,0 +1,109 @@
+<?php
+/**
+* Implements hook_install();
+*/
+function eme_content_order_install() {
+
+  $field_name = 'field_weight';
+  $filed_info = field_info_field($field_name);
+
+  if (empty($filed_info)) {
+
+    $field_weight = array(
+      'active' => 1,
+      'cardinality' => 1,
+      'deleted' => 0,
+      'entity_types' => array(),
+      'field_name' => $field_name,
+      'indexes' => array(),
+      'locked' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'translatable' => 0,
+      'type' => 'number_integer',
+      );
+    field_create_field($field_weight);
+
+  }
+
+  $node_types = node_type_get_types();
+
+  if (!empty($node_types)) {
+    foreach ($node_types as $type => $node_type_info) {
+      $instance_info = field_info_instance('node', $field_name, $type);
+      if (empty($instance_info)) {
+        $instance = array(
+          'bundle' => $type,
+          'label' =>  t('Weight'),
+          'default_value' => NULL,
+          'deleted' => 0,
+          'description' => '',
+          'display' => array(
+            'default' => array(
+              'label' => 'above',
+              'module' => 'number',
+              'settings' => array(
+                'decimal_separator' => '.',
+                'prefix_suffix' => TRUE,
+                'scale' => 0,
+                'thousand_separator' => ' ',
+                ),
+              'type' => 'number_integer',
+              'weight' => 11,
+              ),
+            'teaser' => array(
+              'label' => 'above',
+              'settings' => array(),
+              'type' => 'hidden',
+              'weight' => 0,
+              ),
+            ),
+          'entity_type' => 'node',
+          'field_name' => $field_name,
+          'label' => 'Weight',
+          'required' => 0,
+          'settings' => array(
+            'max' => '',
+            'min' => 0,
+            'prefix' => '',
+            'suffix' => '',
+            'user_register_form' => FALSE,
+            ),
+          'widget' => array(
+            'active' => 0,
+            'module' => 'number',
+            'settings' => array(),
+            'type' => 'number',
+            'weight' => 0,
+            ),
+          );
+
+field_create_instance($instance);
+}
+}
+}
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function eme_content_order_uninstall() {
+
+  $field_name = 'field_weight';
+  $filed_info = field_info_field($field_name);
+
+  if (empty($filed_info)) {
+    return;
+  }
+
+  $node_types = node_type_get_types();
+
+  if (!empty($node_types)) {
+    foreach ($node_types as $type => $node_type_info) {
+      if ($instance = field_info_instance('node', $field_name, $type)) {
+        field_delete_instance($instance);
+      }
+    }
+  }
+  field_delete_field($field_name);
+}

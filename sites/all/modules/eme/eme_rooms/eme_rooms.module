@@ -1,0 +1,117 @@
+<?php
+
+/**
+ *  implemts hook_theme
+ * @return type
+ */
+function eme_rooms_theme() {
+  return array(
+    'rooms_left_navigation' => array(
+      'variables' => array(
+        'links' => array()
+        ),
+      'template' => 'templates/left-nav'
+      )
+    );
+
+}
+/**
+ * Implements hook_block_info().
+ */
+function eme_rooms_block_info() {
+  $blocks = array();
+  $blocks['rooms_left_navigation'] = array(
+    'info' => t('Rooms left navigation'),
+    'cache' => DRUPAL_NO_CACHE,
+    'weight' => 0,
+    );
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view().
+ */
+function eme_rooms_block_view($delta = '') {
+
+  $block =  array();
+  switch ($delta) {
+    case 'rooms_left_navigation':
+    $block['content'] = eme_rooms_get_let_nav();
+    $block['weight'] = 0;
+    break;
+  }
+  return $block;
+}
+
+
+function eme_rooms_get_let_nav(){
+
+  if ($node = menu_get_object()) {
+    $active = NULL;
+    $rooms_main_node =  FALSE;
+    if ($node->type=='rooms'){
+      $wrapper = entity_metadata_wrapper('node', $node);
+      $rooms_main_node =$wrapper->field_rooms_main->value();
+    }
+    if ($node->type=='rooms_main'){
+      $rooms_main_node =$node;
+      $active = 'active';
+    }
+    if (!$rooms_main_node){
+      return;
+    }
+
+    $results = views_get_view_result('rooms', 'left_navigation',$rooms_main_node->nid);
+
+    $links = array();
+    $links[] = array('link'=>l($rooms_main_node->title,drupal_get_path_alias('node/'.$rooms_main_node->nid)),'active'=>$active);
+
+    foreach($results as $row) {
+      $links[] = array('link'=>l($row->node_title,drupal_get_path_alias('node/'.$row->nid)),'active'=>$active = ($row->nid==$node->nid)?'active':'');
+    }
+
+    return theme('rooms_left_navigation', array('links' => $links));
+  }
+}
+
+
+function eme_rooms_form_node_form_alter(&$form, &$form_state, $form_id) {
+
+ $query_parameters = drupal_get_query_parameters();
+ if(!isset($query_parameters['hid'])){
+  return ;
+}
+  // change rooms main form
+if ($form['#node']->type=='rooms_main'){
+
+  if (isset($query_parameters['hid'])){
+    $form['field_hotel']['und']['#value'] = $query_parameters['hid'];
+    $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+    $form['field_hotel']['#suffix'] = '</div>';
+  }
+    // disable on edit form
+  if (isset($form['#node']->nid)){
+   $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+   $form['field_hotel']['#suffix'] = '</div>';
+ }
+}
+
+if ($form['#node']->type=='rooms'){
+  $query_parameters = drupal_get_query_parameters();
+
+  $main_nid =  core_get_list_nid_from_hotel_nid($query_parameters['hid'],'rooms_main');
+
+  if (isset($query_parameters['hid']) && $main_nid ){
+
+    $form['field_rooms_main']['und']['#value'] = $main_nid;
+    $form['field_rooms_main']['#prefix'] = '<div style="display:none;">';
+    $form['field_rooms_main']['#suffix'] = '</div>';
+  }
+    //dsaible on edit form
+  if (isset($form['#node']->nid)){
+   $form['field_rooms_main']['#prefix'] = '<div style="display:none;">';
+   $form['field_rooms_main']['#suffix'] = '</div>';
+ }
+}
+}

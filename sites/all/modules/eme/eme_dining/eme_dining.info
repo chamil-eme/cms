@@ -1,0 +1,11 @@
+name = EME Dining
+description = This module will include all hotel dining related features.
+core = 7.x
+version = 7.x.1
+package  = eme
+
+;Authors
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+
+;Dependent Modules

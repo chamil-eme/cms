@@ -1,0 +1,116 @@
+<?php
+
+/**
+ *  implemts hook_theme
+ * @return type
+ */
+function eme_dining_theme() {
+  return array(
+    'dining_left_navigation' => array(
+      'variables' => array(
+        'links' => array()
+        ),
+      'template' => 'templates/left-nav'
+      )
+    );
+
+}
+/**
+ * Implements hook_block_info().
+ */
+function eme_dining_block_info() {
+  $blocks = array();
+  $blocks['dining_left_navigation'] = array(
+    'info' => t('Dining left navigation'),
+    'cache' => DRUPAL_NO_CACHE,
+    'weight' => 0,
+    );
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view().
+ */
+function eme_dining_block_view($delta = '') {
+
+  $block =  array();
+  switch ($delta) {
+    case 'dining_left_navigation':
+    $block['content'] = eme_dining_get_let_nav();
+    $block['weight'] = 0;
+    break;
+  }
+  return $block;
+}
+
+
+function eme_dining_get_let_nav(){
+
+  if ($node = menu_get_object()) {
+    $active = NULL;
+    $dining_main_node =  FALSE;
+    if ($node->type=='dining'){
+      $wrapper = entity_metadata_wrapper('node', $node);
+      $dining_main_node =$wrapper->field_dining_main->value();
+    }
+    if ($node->type=='dining_main'){
+      $dining_main_node =$node;
+      $active = 'active';
+    }
+    if (!$dining_main_node){
+      return;
+    }
+
+    $results = views_get_view_result('dining', 'left_navigation',$dining_main_node->nid);
+
+    $links = array();
+    $links[] = array('link'=>l($dining_main_node->title,drupal_get_path_alias('node/'.$dining_main_node->nid)),'active'=>$active);
+
+    foreach($results as $row) {
+      $links[] = array('link'=>l($row->node_title,drupal_get_path_alias('node/'.$row->nid)),'active'=>$active = ($row->nid==$node->nid)?'active':'');
+    }
+
+    return theme('dining_left_navigation', array('links' => $links));
+  }
+}
+
+function eme_dining_form_node_form_alter(&$form, &$form_state, $form_id) {
+
+ $query_parameters = drupal_get_query_parameters();
+ if(!isset($query_parameters['hid'])){
+  return ;
+}
+  // change rooms main form
+if ($form['#node']->type=='dining_main'){
+
+  if (isset($query_parameters['hid'])){
+    $form['field_hotel']['und']['#value'] = $query_parameters['hid'];
+    $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+    $form['field_hotel']['#suffix'] = '</div>';
+  }
+    // disable on edit form
+  if (isset($form['#node']->nid)){
+   $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+   $form['field_hotel']['#suffix'] = '</div>';
+ }
+}
+
+if ($form['#node']->type=='dining'){
+  $query_parameters = drupal_get_query_parameters();
+
+  $main_nid =  core_get_list_nid_from_hotel_nid($query_parameters['hid'],'dining_main');
+
+  if (isset($query_parameters['hid']) && $main_nid ){
+
+    $form['field_dining_main']['und']['#value'] = $main_nid;
+    $form['field_dining_main']['#prefix'] = '<div style="display:none;">';
+    $form['field_dining_main']['#suffix'] = '</div>';
+  }
+    //dsaible on edit form
+  if (isset($form['#node']->nid)){
+   $form['field_dining_main']['#prefix'] = '<div style="display:none;">';
+   $form['field_dining_main']['#suffix'] = '</div>';
+ }
+}
+}

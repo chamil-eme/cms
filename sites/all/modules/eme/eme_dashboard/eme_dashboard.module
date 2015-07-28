@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * Implements hook_permission().
+ */
+function eme_dashboard_permission() {
+  $perms = array(
+    'eme dashboard access' => array(
+      'title' => t('Access Dashboard'),
+      'description' => t('This permission allows user to Access the Dashboard'),
+      )
+    );
+  return $perms;
+}
+
+
+/**
+ * Implements hook_menu();
+ */
+
+function eme_dashboard_menu() {
+  $items['dashboard'] = array(
+    'title' => 'Dashboard',
+    'description' => 'Administrative Dashboard',
+    'page callback' => 'eme_dashboard_home',
+    'access arguments' => array('eme dashboard access'),
+    'file' => 'eme_dashboard.pages.inc',
+    );
+
+  return $items;
+}
+
+
+
+
+function eme_dashboard_page_alter(&$page) {
+ if (arg(0) == 'dashboard') {
+  foreach (element_children($page) as $region) {
+    $page[$region]['#access'] = ($region == 'content');
+  }
+}
+}
+
+

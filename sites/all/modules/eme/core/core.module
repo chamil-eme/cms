@@ -19,3 +19,35 @@ function core_menu() {
 
   return $items;
 }
+
+/**
+ * get hotel nid from listing page
+ * @param  [type] $nid [description]
+ * @return [type]      [description]
+ */
+function core_get_list_nid_from_hotel_nid($nid,$type){
+
+ $cache = &drupal_static(__FUNCTION__);
+ $key =  $nid.$type;
+
+
+ if (!isset($cache[$key])) {
+  watchdog('test', 'hit db');
+  $query = new EntityFieldQuery();
+  $result = $query
+  ->entityCondition('entity_type', 'node')
+  ->entityCondition('bundle', $type)
+  ->fieldCondition('field_hotel', 'target_id', array($nid), 'IN')
+  ->propertyCondition('status', NODE_PUBLISHED)
+  ->execute();
+  if (!empty($result)){
+    $nids = array_keys($result['node']);
+    $cache[$key] =  reset($nids);
+
+  }
+  else {
+    $cache[$key] =  FALSE;
+  }
+}
+return  $cache[$key];
+}
