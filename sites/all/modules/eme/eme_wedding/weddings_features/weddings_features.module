@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Weddings Features feature.
+ */
+
+include_once 'weddings_features.features.inc';

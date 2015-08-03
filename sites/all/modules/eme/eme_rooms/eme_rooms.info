@@ -9,3 +9,4 @@ authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
 
 
 ;Dependent Modules
+dependencies[] = rooms_features

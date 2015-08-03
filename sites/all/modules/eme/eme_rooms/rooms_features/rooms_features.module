@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Rooms Features feature.
+ */
+
+include_once 'rooms_features.features.inc';

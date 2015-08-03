@@ -51,3 +51,90 @@ function core_get_list_nid_from_hotel_nid($nid,$type){
 }
 return  $cache[$key];
 }
+
+/**
+ * get main content types in site
+ * @return array content_types
+ */
+function core_get_main_content_types() {
+ $content_types = module_invoke_all('core_content_types');
+ return $content_types;
+
+}
+
+function core_get_hotel_nid_from_url_menu_object(){
+  if ($node = menu_get_object()) {
+    return core_get_hotel_from_nid($node->nid);
+  }
+  return FALSE;
+}
+
+
+
+
+
+/**
+ * [core_get_hotel_from_url_menu_object description]
+ * @param  [type] $nid [description]
+ * @return [type]      [description]
+ */
+function core_get_hotel_from_nid($nid){
+  $node  =  node_load($nid);
+  if ($node->type=='hotel'){
+    return $node->nid;
+  }
+  $items  =  field_get_items('node',$node,'field_hotel');
+  if (!empty($items)){
+    return $items[0]['target_id'];
+  }
+  $items  =  field_get_items('node',$node,'field_'.$node->type.'_main');
+
+  if (!empty($items)){
+    return core_get_hotel_from_nid($items[0]['target_id']);
+
+  }
+  return FALSE;
+}
+
+
+function core_form_node_form_alter(&$form, &$form_state, $form_id) {
+
+
+  $query_parameters = drupal_get_query_parameters();
+
+  if(!isset($query_parameters['hid'])&& !isset($form['#node']->nid)){
+    return ;
+  }
+
+
+  if (isset($query_parameters['hid'])){
+
+    foreach ($form['menu']['link']['parent']['#options'] as $key => $option) {
+      $pos = strpos($key, drupal_lookup_path('alias', "node/".$query_parameters['hid']));
+      if ($pos === false) {
+       unset($form['menu']['link']['parent']['#options'][$key]);
+     }
+
+   }
+
+ }
+
+ elseif (isset($form['#node']->nid)) {
+  $hotel_nid = core_get_hotel_from_nid ($form['#node']->nid);
+  foreach ($form['menu']['link']['parent']['#options'] as $key => $option) {
+    $pos = strpos($key, drupal_lookup_path('alias', "node/".$hotel_nid));
+    if ($pos === false) {
+     unset($form['menu']['link']['parent']['#options'][$key]);
+   }
+
+ }
+}
+
+}
+function core_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'form_alter' && isset($implementations['core'])) {
+    $group = $implementations['core'];
+    unset($implementations['core']);
+    $implementations['core'] = $group;
+  }
+}

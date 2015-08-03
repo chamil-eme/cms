@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Dining Features feature.
+ */
+
+include_once 'dining_features.features.inc';

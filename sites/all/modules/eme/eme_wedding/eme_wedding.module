@@ -1,6 +1,6 @@
 <?php
 /**
- *  implemts hook_theme
+ *  implements hook_theme
  * @return type
  */
 function eme_wedding_theme() {
@@ -63,6 +63,9 @@ function eme_wedding_get_let_nav(){
 
     $results = views_get_view_result('wedding', 'left_navigation',$wedding_main_node->nid);
 
+    if (empty($results)){
+      return NULL;
+    }
     $links = array();
     $links[] = array('link'=>l($wedding_main_node->title,drupal_get_path_alias('node/'.$wedding_main_node->nid)),'active'=>$active);
 
@@ -72,4 +75,54 @@ function eme_wedding_get_let_nav(){
 
     return theme('wedding_left_navigation', array('links' => $links));
   }
+}
+
+
+
+function eme_wedding_form_node_form_alter(&$form, &$form_state, $form_id) {
+
+ $query_parameters = drupal_get_query_parameters();
+ if(!isset($query_parameters['hid'])){
+  return ;
+}
+
+if ($form['#node']->type=='weddings_main'){
+
+  if (isset($query_parameters['hid'])){
+    $form['field_hotel']['und']['#value'] = $query_parameters['hid'];
+    $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+    $form['field_hotel']['#suffix'] = '</div>';
+  }
+    // disable on edit form
+  if (isset($form['#node']->nid)){
+   $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+   $form['field_hotel']['#suffix'] = '</div>';
+ }
+}
+
+if ($form['#node']->type=='weddings'){
+  $query_parameters = drupal_get_query_parameters();
+
+  $main_nid =  core_get_list_nid_from_hotel_nid($query_parameters['hid'],'weddings_main');
+
+  if (isset($query_parameters['hid']) && $main_nid ){
+
+    $form['field_weddings_main']['und']['#value'] = $main_nid;
+    $form['field_weddings_main']['#prefix'] = '<div style="display:none;">';
+    $form['field_weddings_main']['#suffix'] = '</div>';
+  }
+    //disable on edit form
+  if (isset($form['#node']->nid)){
+   $form['field_weddings_main']['#prefix'] = '<div style="display:none;">';
+   $form['field_weddings_main']['#suffix'] = '</div>';
+ }
+}
+}
+
+/**
+ * implements hook_core_content_types
+ * @return [type] [description]
+ */
+function eme_wedding_core_content_types() {
+  return array('weddings','weddings_main');
 }

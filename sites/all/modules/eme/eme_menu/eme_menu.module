@@ -1,13 +1,4 @@
 <?php
-/**
- * implements hook node insert
- * @param  [type] $node [description]
- * @return [type]       [description]
- */
-// function eme_menu_node_insert($node) {
-
-// }
-
 
 /**
  * Implement hook_rules_action_info().
@@ -28,7 +19,11 @@ function eme_menu_rules_action_info() {
 }
 
 
-
+/**
+ * crate new menu for hotel
+ * @param  [type] $node
+ * @return
+ */
 function eme_menu_crate_new_hotel_menu($node){
 
   if ($node->type !='hotel'){
@@ -44,6 +39,13 @@ function eme_menu_crate_new_hotel_menu($node){
   $exists = db_query("SELECT title FROM {menu_custom} WHERE menu_name=:menu_name", array(':menu_name' => $menu['menu_name']))->fetchField();
   if (!$exists) {
     menu_save($menu);
+// make available hotel menu for all main content types
+    $content_types = core_get_main_content_types();
+    foreach($content_types as $content_type){
+      $curr_list = variable_get('menu_options_'.$content_type);
+      variable_set('menu_options_'.$content_type, array_merge($curr_list, array($menu['menu_name'])));
+    }
+
   }
 
   $link = array(
@@ -54,14 +56,44 @@ function eme_menu_crate_new_hotel_menu($node){
     'expanded' => 0,
     );
 
-  watchdog('eme_menu', print_r($link,TRUE));
-  watchdog('eme_menu', "$$$$$$$$$$$$$$$$$$$");
 
   $exists = db_query("SELECT mlid from {menu_links} WHERE link_title=:link_title AND link_path=:link_path", array(':link_title' =>  $link['link_title'], ':link_path' => $link['link_path']))->fetchField();
-
+// save menu item to menu
   if (!$exists) {
-    watchdog('eme_menu', "$$$$$$$$$$$$$$$$$$$");
     menu_link_save($link);
   }
+}
 
+/**
+ * Implements hook_block_info().
+ */
+function eme_menu_block_info() {
+  $blocks = array();
+  $blocks['hotel_menu'] = array(
+    'info' => t('Hotel Menu'),
+    'cache' => DRUPAL_NO_CACHE,
+    'weight' => 0,
+    );
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view().
+ */
+function eme_menu_block_view($delta = '') {
+
+  $block =  array();
+  if ($nid = core_get_hotel_nid_from_url_menu_object()){
+
+    $node =  node_load($nid);
+    switch ($delta) {
+      case 'hotel_menu':
+      $block['content'] = theme('tb_megamenu', array('menu_name' => drupal_lookup_path('alias', "node/".$node->nid)));
+      $block['weight'] = 0;
+      break;
+    }
+  }
+
+  return $block;
 }

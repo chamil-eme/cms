@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  implemts hook_theme
+ *  implements hook_theme
  * @return type
  */
 function eme_dining_theme() {
@@ -65,7 +65,11 @@ function eme_dining_get_let_nav(){
     $results = views_get_view_result('dining', 'left_navigation',$dining_main_node->nid);
 
     $links = array();
+    if (empty($results)){
+      return NULL;
+    }
     $links[] = array('link'=>l($dining_main_node->title,drupal_get_path_alias('node/'.$dining_main_node->nid)),'active'=>$active);
+
 
     foreach($results as $row) {
       $links[] = array('link'=>l($row->node_title,drupal_get_path_alias('node/'.$row->nid)),'active'=>$active = ($row->nid==$node->nid)?'active':'');
@@ -77,26 +81,27 @@ function eme_dining_get_let_nav(){
 
 function eme_dining_form_node_form_alter(&$form, &$form_state, $form_id) {
 
- $query_parameters = drupal_get_query_parameters();
- if(!isset($query_parameters['hid'])){
-  return ;
-}
-  // change rooms main form
-if ($form['#node']->type=='dining_main'){
 
-  if (isset($query_parameters['hid'])){
-    $form['field_hotel']['und']['#value'] = $query_parameters['hid'];
-    $form['field_hotel']['#prefix'] = '<div style="display:none;">';
-    $form['field_hotel']['#suffix'] = '</div>';
+  $query_parameters = drupal_get_query_parameters();
+  if(!isset($query_parameters['hid'])){
+    return ;
   }
-    // disable on edit form
-  if (isset($form['#node']->nid)){
-   $form['field_hotel']['#prefix'] = '<div style="display:none;">';
-   $form['field_hotel']['#suffix'] = '</div>';
- }
-}
+  // change rooms main form
+  if ($form['#node']->type=='dining_main'){
 
-if ($form['#node']->type=='dining'){
+    if (isset($query_parameters['hid'])){
+      $form['field_hotel']['und']['#value'] = $query_parameters['hid'];
+      $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+      $form['field_hotel']['#suffix'] = '</div>';
+    }
+    // disable on edit form
+    if (isset($form['#node']->nid)){
+     $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+     $form['field_hotel']['#suffix'] = '</div>';
+   }
+ }
+
+ if ($form['#node']->type=='dining'){
   $query_parameters = drupal_get_query_parameters();
 
   $main_nid =  core_get_list_nid_from_hotel_nid($query_parameters['hid'],'dining_main');
@@ -107,10 +112,18 @@ if ($form['#node']->type=='dining'){
     $form['field_dining_main']['#prefix'] = '<div style="display:none;">';
     $form['field_dining_main']['#suffix'] = '</div>';
   }
-    //dsaible on edit form
+    //disable on edit form
   if (isset($form['#node']->nid)){
    $form['field_dining_main']['#prefix'] = '<div style="display:none;">';
    $form['field_dining_main']['#suffix'] = '</div>';
  }
 }
+}
+
+/**
+ * implements hook_core_content_types
+ * @return [type] [description]
+ */
+function eme_dining_core_content_types() {
+  return array('dining','dining_main');
 }

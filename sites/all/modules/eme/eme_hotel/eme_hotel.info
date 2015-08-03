@@ -1,0 +1,12 @@
+name = Hotel
+description = Hotel page
+core = 7.x
+version = 7.x.1
+package  = eme
+
+;Authors
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+
+;Dependent Modules
+dependencies[] = hotel_features

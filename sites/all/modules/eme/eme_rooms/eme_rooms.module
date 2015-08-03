@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  implemts hook_theme
+ *  implements hook_theme
  * @return type
  */
 function eme_rooms_theme() {
@@ -64,6 +64,9 @@ function eme_rooms_get_let_nav(){
 
     $results = views_get_view_result('rooms', 'left_navigation',$rooms_main_node->nid);
 
+    if (empty($results)){
+      return NULL;
+    }
     $links = array();
     $links[] = array('link'=>l($rooms_main_node->title,drupal_get_path_alias('node/'.$rooms_main_node->nid)),'active'=>$active);
 
@@ -78,26 +81,28 @@ function eme_rooms_get_let_nav(){
 
 function eme_rooms_form_node_form_alter(&$form, &$form_state, $form_id) {
 
- $query_parameters = drupal_get_query_parameters();
- if(!isset($query_parameters['hid'])){
-  return ;
-}
-  // change rooms main form
-if ($form['#node']->type=='rooms_main'){
 
-  if (isset($query_parameters['hid'])){
-    $form['field_hotel']['und']['#value'] = $query_parameters['hid'];
-    $form['field_hotel']['#prefix'] = '<div style="display:none;">';
-    $form['field_hotel']['#suffix'] = '</div>';
+
+  $query_parameters = drupal_get_query_parameters();
+  if(!isset($query_parameters['hid'])&& !isset($form['#node']->nid)){
+    return ;
   }
-    // disable on edit form
-  if (isset($form['#node']->nid)){
-   $form['field_hotel']['#prefix'] = '<div style="display:none;">';
-   $form['field_hotel']['#suffix'] = '</div>';
- }
-}
+  // change rooms main form
+  if ($form['#node']->type=='rooms_main'){
 
-if ($form['#node']->type=='rooms'){
+    if (isset($query_parameters['hid'])){
+      $form['field_hotel']['und']['#value'] = $query_parameters['hid'];
+      $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+      $form['field_hotel']['#suffix'] = '</div>';
+    }
+    // disable on edit form
+    if (isset($form['#node']->nid)){
+     $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+     $form['field_hotel']['#suffix'] = '</div>';
+   }
+ }
+
+ if ($form['#node']->type=='rooms'){
   $query_parameters = drupal_get_query_parameters();
 
   $main_nid =  core_get_list_nid_from_hotel_nid($query_parameters['hid'],'rooms_main');
@@ -108,10 +113,20 @@ if ($form['#node']->type=='rooms'){
     $form['field_rooms_main']['#prefix'] = '<div style="display:none;">';
     $form['field_rooms_main']['#suffix'] = '</div>';
   }
-    //dsaible on edit form
+
+    //disable on edit form
   if (isset($form['#node']->nid)){
-   $form['field_rooms_main']['#prefix'] = '<div style="display:none;">';
-   $form['field_rooms_main']['#suffix'] = '</div>';
- }
+
+    $form['field_rooms_main']['#prefix'] = '<div style="display:none;">';
+    $form['field_rooms_main']['#suffix'] = '</div>';
+  }
 }
+}
+
+/**
+ * implements hook_core_content_types
+ * @return [type] [description]
+ */
+function eme_rooms_core_content_types() {
+  return array('rooms','rooms_main');
 }

@@ -1,0 +1,12 @@
+name = Corporate Hotel
+description = Corporate hotel features
+core = 7.x
+version = 7.x.1
+package  = eme
+
+;Authors
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+
+;Dependent Modules
+dependencies[] = corporate_features
