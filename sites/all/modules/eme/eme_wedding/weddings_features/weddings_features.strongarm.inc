@@ -34,6 +34,9 @@ function weddings_features_strongarm() {
       'token' => array(
         'custom_settings' => FALSE,
       ),
+      'diff_standard' => array(
+        'custom_settings' => FALSE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
@@ -71,6 +74,9 @@ function weddings_features_strongarm() {
         'custom_settings' => FALSE,
       ),
       'token' => array(
+        'custom_settings' => FALSE,
+      ),
+      'diff_standard' => array(
         'custom_settings' => FALSE,
       ),
     ),
@@ -175,6 +181,20 @@ function weddings_features_strongarm() {
   $strongarm->name = 'node_submitted_weddings_main';
   $strongarm->value = 0;
   $export['node_submitted_weddings_main'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_weddings_main_pattern';
+  $strongarm->value = '[node:field-hotel:title]/[node:title]';
+  $export['pathauto_node_weddings_main_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_weddings_pattern';
+  $strongarm->value = '[node:field-weddings-main:field-hotel:title]/[node:field-weddings-main:title]/[node:title]';
+  $export['pathauto_node_weddings_pattern'] = $strongarm;
 
   return $export;
 }

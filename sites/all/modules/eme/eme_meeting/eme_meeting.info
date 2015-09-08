@@ -1,0 +1,12 @@
+name = EME Meeting
+description = This module will include all meeting related features.
+core = 7.x
+version = 7.x.1
+package  = eme
+
+;Authors
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+
+;Dependent Modules
+;dependencies[] = weddings_features

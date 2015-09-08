@@ -1,0 +1,8 @@
+machine name  = fancybox
+name          = fancybox libraray
+vendor url    = http://masonry.desandro.com/
+download url  = http://masonry.desandro.com/
+version       = 3.3.2
+
+files[js][jquery.fancybox.pack.js]  = jquery.fancybox.pack.js
+files[css][jquery.fancybox.css]  = jquery.fancybox.css

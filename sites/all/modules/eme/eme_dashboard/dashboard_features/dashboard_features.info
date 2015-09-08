@@ -1,0 +1,13 @@
+name = Dashboard Features
+description = Dashboard Features
+core = 7.x
+package = eme
+version = 7.x-1.0-beta1
+dependencies[] = ctools
+dependencies[] = eme_dashboard
+dependencies[] = features
+dependencies[] = page_manager
+features[ctools][] = page_manager:pages_default:1
+features[features_api][] = api:2
+features[page_manager_pages][] = hotel_dashboard
+features[user_permission][] = eme dashboard access

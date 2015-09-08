@@ -30,7 +30,6 @@ function core_get_list_nid_from_hotel_nid($nid,$type){
  $cache = &drupal_static(__FUNCTION__);
  $key =  $nid.$type;
 
-
  if (!isset($cache[$key])) {
   watchdog('test', 'hit db');
   $query = new EntityFieldQuery();
@@ -70,9 +69,6 @@ function core_get_hotel_nid_from_url_menu_object(){
 }
 
 
-
-
-
 /**
  * [core_get_hotel_from_url_menu_object description]
  * @param  [type] $nid [description]
@@ -105,8 +101,6 @@ function core_form_node_form_alter(&$form, &$form_state, $form_id) {
   if(!isset($query_parameters['hid'])&& !isset($form['#node']->nid)){
     return ;
   }
-
-
   if (isset($query_parameters['hid'])){
 
     foreach ($form['menu']['link']['parent']['#options'] as $key => $option) {
@@ -129,7 +123,6 @@ function core_form_node_form_alter(&$form, &$form_state, $form_id) {
 
  }
 }
-
 }
 function core_module_implements_alter(&$implementations, $hook) {
   if ($hook == 'form_alter' && isset($implementations['core'])) {

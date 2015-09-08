@@ -1,0 +1,11 @@
+name = EME Footer
+description = This module will add footer links
+core = 7.x
+version = 7.x.1
+package  = eme
+
+;Authors
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+
+;Dependent Modules

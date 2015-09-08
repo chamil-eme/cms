@@ -1,0 +1,12 @@
+name = Core Features
+core = 7.x
+package = eme
+version = 7.x-1.0-beta1
+dependencies[] = ctools
+dependencies[] = strongarm
+dependencies[] = breadcrumbs_by_path
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = breadcrumbs_by_path_core_paths
+features[variable][] = breadcrumbs_by_path_current_title
+features[variable][] = breadcrumbs_by_path_exclude_paths

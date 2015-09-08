@@ -22,7 +22,7 @@ function rooms_features_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -61,7 +61,7 @@ function rooms_features_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 3,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -108,7 +108,7 @@ function rooms_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 2,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -143,10 +143,42 @@ function rooms_features_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 4,
+        'label' => 'hidden',
+        'module' => 'field_slideshow',
+        'settings' => array(
+          'slideshow_caption' => '',
+          'slideshow_caption_link' => '',
+          'slideshow_carousel_circular' => 0,
+          'slideshow_carousel_follow' => 0,
+          'slideshow_carousel_image_style' => '',
+          'slideshow_carousel_scroll' => 1,
+          'slideshow_carousel_skin' => '',
+          'slideshow_carousel_speed' => 500,
+          'slideshow_carousel_vertical' => 0,
+          'slideshow_carousel_visible' => 3,
+          'slideshow_colorbox_image_style' => '',
+          'slideshow_colorbox_slideshow' => '',
+          'slideshow_colorbox_slideshow_speed' => 4000,
+          'slideshow_colorbox_speed' => 350,
+          'slideshow_colorbox_transition' => 'elastic',
+          'slideshow_controls' => 0,
+          'slideshow_controls_pause' => 0,
+          'slideshow_controls_position' => 'after',
+          'slideshow_field_collection_image' => '',
+          'slideshow_fx' => 'fade',
+          'slideshow_image_style' => 'medium',
+          'slideshow_link' => '',
+          'slideshow_order' => '',
+          'slideshow_pager' => '',
+          'slideshow_pager_image_style' => '',
+          'slideshow_pager_position' => 'after',
+          'slideshow_pause' => 0,
+          'slideshow_speed' => 1000,
+          'slideshow_start_on_hover' => 0,
+          'slideshow_timeout' => 4000,
+        ),
+        'type' => 'slideshow',
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -237,7 +269,7 @@ function rooms_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 6,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -273,12 +305,24 @@ function rooms_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 5,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'text',
-        'settings' => array(),
+        'settings' => array(
+          'masonry' => FALSE,
+          'masonry_animated' => 0,
+          'masonry_animation_duration' => 500,
+          'masonry_column_width' => '',
+          'masonry_column_width_units' => 'px',
+          'masonry_fit_width' => 0,
+          'masonry_gutter_width' => 0,
+          'masonry_images_first' => 1,
+          'masonry_resizable' => 1,
+          'masonry_rtl' => 0,
+          'masonry_stamp_selector' => '',
+        ),
         'type' => 'text_default',
         'weight' => 0,
       ),
@@ -302,6 +346,49 @@ function rooms_features_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rooms-field_social_buttons'
+  $field_instances['node-rooms-field_social_buttons'] = array(
+    'bundle' => 'rooms',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'social_buttons',
+        'settings' => array(),
+        'type' => 'social_buttons_formatter_default',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_social_buttons',
+    'label' => 'Social Buttons',
+    'required' => 0,
+    'settings' => array(
+      'button-0' => '<div id="fb-root"></div><script> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs);}(document, "script", "facebook-jssdk"));</script> <div class="fb-like" data-send="false" data-layout="button_count" data-width="1" data-show-faces="false"></div>',
+      'button-1' => '<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>',
+      'button-2' => '<div class="g-plusone" data-size="medium"></div><script>(function() {var po = document.createElement("script"); po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(po, s);})();</script>',
+      'button-3' => '',
+      'button-4' => '',
+      'init' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'social_buttons',
+      'settings' => array(),
+      'type' => 'social_buttons_exposed',
+      'weight' => 41,
+    ),
+  );
+
   // Exported field_instance: 'node-rooms-field_weight'
   $field_instances['node-rooms-field_weight'] = array(
     'bundle' => 'rooms',
@@ -313,7 +400,7 @@ function rooms_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -354,7 +441,7 @@ function rooms_features_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -391,12 +478,9 @@ function rooms_features_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 6,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -418,13 +502,13 @@ function rooms_features_field_default_field_instances() {
       'settings' => array(
         'fields' => array(),
         'type_settings' => array(
-          'allow_existing' => 0,
+          'allow_existing' => 1,
           'allow_new' => 1,
           'delete_references' => 0,
-          'label_plural' => 'nodes',
-          'label_singular' => 'node',
+          'label_plural' => 'Banners',
+          'label_singular' => 'Banner',
           'match_operator' => 'CONTAINS',
-          'override_labels' => 0,
+          'override_labels' => 1,
         ),
       ),
       'type' => 'inline_entity_form',
@@ -443,7 +527,7 @@ function rooms_features_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 2,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -482,7 +566,7 @@ function rooms_features_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -517,7 +601,7 @@ function rooms_features_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 5,
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -608,12 +692,24 @@ function rooms_features_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 3,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'text',
-        'settings' => array(),
+        'settings' => array(
+          'masonry' => FALSE,
+          'masonry_animated' => 0,
+          'masonry_animation_duration' => 500,
+          'masonry_column_width' => '',
+          'masonry_column_width_units' => 'px',
+          'masonry_fit_width' => 0,
+          'masonry_gutter_width' => 0,
+          'masonry_images_first' => 1,
+          'masonry_resizable' => 1,
+          'masonry_rtl' => 0,
+          'masonry_stamp_selector' => '',
+        ),
         'type' => 'text_default',
         'weight' => 0,
       ),
@@ -637,6 +733,49 @@ function rooms_features_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-rooms_main-field_social_buttons'
+  $field_instances['node-rooms_main-field_social_buttons'] = array(
+    'bundle' => 'rooms_main',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'social_buttons',
+        'settings' => array(),
+        'type' => 'social_buttons_formatter_default',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_social_buttons',
+    'label' => 'Social Buttons',
+    'required' => 0,
+    'settings' => array(
+      'button-0' => '<div id="fb-root"></div><script> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs);}(document, "script", "facebook-jssdk"));</script> <div class="fb-like" data-send="false" data-layout="button_count" data-width="1" data-show-faces="false"></div>',
+      'button-1' => '<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>',
+      'button-2' => '<div class="g-plusone" data-size="medium"></div><script>(function() {var po = document.createElement("script"); po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(po, s);})();</script>',
+      'button-3' => '',
+      'button-4' => '',
+      'init' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'social_buttons',
+      'settings' => array(),
+      'type' => 'social_buttons_exposed',
+      'weight' => 41,
+    ),
+  );
+
   // Exported field_instance: 'node-rooms_main-field_weight'
   $field_instances['node-rooms_main-field_weight'] = array(
     'bundle' => 'rooms_main',
@@ -648,7 +787,7 @@ function rooms_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -686,6 +825,7 @@ function rooms_features_field_default_field_instances() {
   t('Images');
   t('Rooms Main');
   t('Short Description');
+  t('Social Buttons');
   t('Weight');
 
   return $field_instances;

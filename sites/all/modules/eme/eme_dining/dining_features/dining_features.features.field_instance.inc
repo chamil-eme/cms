@@ -22,7 +22,7 @@ function dining_features_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -61,7 +61,7 @@ function dining_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 3,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -108,7 +108,7 @@ function dining_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 2,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -147,7 +147,7 @@ function dining_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -214,7 +214,7 @@ function dining_features_field_default_field_instances() {
           'slideshow_timeout' => 4000,
         ),
         'type' => 'slideshow',
-        'weight' => 1,
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -305,7 +305,7 @@ function dining_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 6,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -334,6 +334,49 @@ function dining_features_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-dining-field_social_buttons'
+  $field_instances['node-dining-field_social_buttons'] = array(
+    'bundle' => 'dining',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'social_buttons',
+        'settings' => array(),
+        'type' => 'social_buttons_formatter_default',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_social_buttons',
+    'label' => 'Social Buttons',
+    'required' => 0,
+    'settings' => array(
+      'button-0' => '<div id="fb-root"></div><script> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs);}(document, "script", "facebook-jssdk"));</script> <div class="fb-like" data-send="false" data-layout="button_count" data-width="1" data-show-faces="false"></div>',
+      'button-1' => '<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>',
+      'button-2' => '<div class="g-plusone" data-size="medium"></div><script>(function() {var po = document.createElement("script"); po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(po, s);})();</script>',
+      'button-3' => '',
+      'button-4' => '',
+      'init' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'social_buttons',
+      'settings' => array(),
+      'type' => 'social_buttons_exposed',
+      'weight' => 40,
+    ),
+  );
+
   // Exported field_instance: 'node-dining-field_weight'
   $field_instances['node-dining-field_weight'] = array(
     'bundle' => 'dining',
@@ -345,7 +388,7 @@ function dining_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 5,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -386,7 +429,7 @@ function dining_features_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -425,7 +468,7 @@ function dining_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -472,7 +515,7 @@ function dining_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 3,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -511,7 +554,7 @@ function dining_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 6,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -546,7 +589,7 @@ function dining_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 2,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -637,7 +680,7 @@ function dining_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 5,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -666,6 +709,49 @@ function dining_features_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-dining_main-field_social_buttons'
+  $field_instances['node-dining_main-field_social_buttons'] = array(
+    'bundle' => 'dining_main',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'social_buttons',
+        'settings' => array(),
+        'type' => 'social_buttons_formatter_default',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_social_buttons',
+    'label' => 'Social Buttons',
+    'required' => 0,
+    'settings' => array(
+      'button-0' => '<div id="fb-root"></div><script> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs);}(document, "script", "facebook-jssdk"));</script> <div class="fb-like" data-send="false" data-layout="button_count" data-width="1" data-show-faces="false"></div>',
+      'button-1' => '<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>',
+      'button-2' => '<div class="g-plusone" data-size="medium"></div><script>(function() {var po = document.createElement("script"); po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(po, s);})();</script>',
+      'button-3' => '',
+      'button-4' => '',
+      'init' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'social_buttons',
+      'settings' => array(),
+      'type' => 'social_buttons_exposed',
+      'weight' => 41,
+    ),
+  );
+
   // Exported field_instance: 'node-dining_main-field_weight'
   $field_instances['node-dining_main-field_weight'] = array(
     'bundle' => 'dining_main',
@@ -677,7 +763,7 @@ function dining_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -715,6 +801,7 @@ function dining_features_field_default_field_instances() {
   t('Hotel');
   t('Images');
   t('Short Description');
+  t('Social Buttons');
   t('Weight');
 
   return $field_instances;

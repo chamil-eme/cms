@@ -97,3 +97,8 @@ function eme_menu_block_view($delta = '') {
 
   return $block;
 }
+
+function  eme_menu_node_type_insert($info){
+  watchdog('eme_menu', print_r($info,TRUE));
+  kpr($info);
+}

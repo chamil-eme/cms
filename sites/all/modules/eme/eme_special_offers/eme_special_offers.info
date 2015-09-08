@@ -1,0 +1,12 @@
+name = EME Special Offers
+description = This module will include all special offers related features.
+core = 7.x
+version = 7.x.1
+package  = eme
+
+;Authors
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+
+;Dependent Modules
+ependencies[] = special_offers_features

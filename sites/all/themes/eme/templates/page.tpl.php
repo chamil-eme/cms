@@ -73,21 +73,30 @@
  * @ingroup themeable
  */
 ?>
-<!-- <header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
-  <div class="container">
-    <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
+<header id="navbar" role="banner" class="container-fluid">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <?php if ($logo): ?>
+        <a class="logo navbar-btn pull-left" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
+          <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+        </a>
+      <?php endif; ?>
+    </div>
+
+    <?php if (!empty($primary_nav)): ?>
       <div class="navbar-collapse collapse">
         <nav role="navigation">
-          <?php if (!empty($page['navigation'])): ?>
-            <?php print render($page['navigation']); ?>
+          <?php if (!empty($primary_nav)): ?>
+            <?php print render($primary_nav); ?>
           <?php endif; ?>
+
         </nav>
       </div>
     <?php endif; ?>
   </div>
-</header> -->
+</header>
 
-<div class="main-container container">
+<div class="main-container container-fluid">
 
   <header role="banner" id="page-header">
     <?php if (!empty($site_slogan)): ?>
@@ -137,6 +146,6 @@
 
 </div>
 </div>
-<footer class="footer container">
+<footer class="footer container-fluid">
   <?php print render($page['footer']); ?>
 </footer>

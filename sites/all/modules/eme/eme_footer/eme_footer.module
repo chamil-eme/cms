@@ -1,0 +1,59 @@
+<?php
+/**
+ * Implements hook_block_info().
+ */
+function eme_footer_block_info() {
+  $blocks = array();
+  $blocks['eme_footer_hotel_menu'] = array(
+    'info' => t('Hotel footer menu links'),
+    'cache' => DRUPAL_NO_CACHE,
+    'weight' => 0,
+    );
+  $blocks['eme_footer_icon_menu'] = array(
+    'info' => t('Hotel footer icon menu'),
+    'cache' => DRUPAL_NO_CACHE,
+    'weight' => 0,
+    );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function eme_footer_block_view($delta = '') {
+
+  $block =  array();
+  if ($nid = core_get_hotel_nid_from_url_menu_object()){
+    $node =  node_load($nid);
+    switch ($delta) {
+      case 'eme_footer_hotel_menu':
+      $menu_machine_name  = drupal_lookup_path('alias', "node/".$node->nid);
+      $menu = menu_navigation_links($menu_machine_name);
+      $block['content'] =    theme('links__'.$menu_machine_name, array('links' => $menu));
+      $block['weight'] = 0;
+      break;
+      case 'eme_footer_icon_menu':
+      $menu = array();
+      $block['content'] =    theme('footer_icon_menu', array('links' => $menu));
+      $block['weight'] = 0;
+      break;
+    }
+  }
+  return $block;
+}
+
+
+/**
+ *  implements hook_theme
+ * @return type
+ */
+function eme_footer_theme() {
+  return array(
+    'footer_icon_menu' => array(
+      'variables' => array(
+        'links' => array()
+        ),
+      'template' => 'templates/icon'
+      )
+    );
+}

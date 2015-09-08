@@ -1,0 +1,43 @@
+<?php
+/**
+ * Implementation of hook_field_formatter_info().
+ */
+function eme_tablefield_field_formatter_info() {
+  return array(
+    'tablefield_seating_capacity' => array(
+      'label' => t('Seating Capacity  View'),
+      'field types' => array('tablefield'),
+      'multiple values' => FIELD_BEHAVIOR_DEFAULT,
+      ),
+    );
+}
+
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function eme_tablefield_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $elements = array();
+  foreach ($items as $delta => $item) {
+    $elements[$delta] = array(
+      '#markup' => theme('eme_tablefield_formatter_'. $display['type'], array('element' => $item)),
+      );
+
+  }
+  return $elements;
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function eme_tablefield_theme() {
+  return array(
+    'eme_tablefield_formatter_tablefield_seating_capacity' => array(
+     'variables' => array(
+      'element' => NULL
+      ),
+     'template' => 'templates/seating_capacity'
+     ),
+    );
+}

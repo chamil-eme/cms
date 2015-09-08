@@ -1,0 +1,166 @@
+<?php
+
+/**
+ *  implements hook_theme
+ * @return type
+ */
+function eme_special_offers_theme() {
+  return array(
+    'special_offers_left_navigation' => array(
+      'variables' => array(
+        'links' => array()
+        ),
+      'template' => 'templates/left-nav'
+      )
+    );
+
+}
+/**
+ * Implements hook_block_info().
+ */
+function eme_special_offers_block_info() {
+  $blocks = array();
+  $blocks['special_offers_left_navigation'] = array(
+    'info' => t('special offers left navigation'),
+    'cache' => DRUPAL_NO_CACHE,
+    'weight' => 0,
+    );
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view().
+ */
+function eme_special_offers_block_view($delta = '') {
+
+  $block =  array();
+  switch ($delta) {
+    case 'special_offers_left_navigation':
+    $block['content'] = eme_special_offers_get_let_nav();
+    $block['weight'] = 0;
+    break;
+  }
+  return $block;
+}
+
+
+/**
+ * callback for get block content
+ * @return [type] [description]
+ */
+function eme_special_offers_get_let_nav(){
+
+  if ($node = menu_get_object()) {
+    $active = NULL;
+    $special_offers_main_node =  FALSE;
+    if ($node->type=='special_offers'){
+      $wrapper = entity_metadata_wrapper('node', $node);
+      $special_offers_main_node =$wrapper->field_special_offers_main->value();
+    }
+    if ($node->type=='special_offers_main'){
+      $special_offers_main_node =$node;
+      $active = 'active';
+    }
+    if (!$special_offers_main_node){
+      return;
+    }
+
+    $results = views_get_view_result('special_offers', 'left_navigation',$special_offers_main_node->nid);
+
+    $links = array();
+    if (empty($results)){
+      return NULL;
+    }
+    $links[] = array('link'=>l($special_offers_main_node->title,drupal_get_path_alias('node/'.$special_offers_main_node->nid)),'active'=>$active);
+
+
+    foreach($results as $row) {
+      $links[] = array('link'=>l($row->node_title,drupal_get_path_alias('node/'.$row->nid)),'active'=>$active = ($row->nid==$node->nid)?'active':'');
+    }
+
+    return theme('special_offers_left_navigation', array('links' => $links));
+  }
+}
+
+/**
+ * implements hook_node_form_alter
+ * @param  [type] &$form       [description]
+ * @param  [type] &$form_state [description]
+ * @param  [type] $form_id     [description]
+ * @return [type]              [description]
+ */
+function eme_special_offers_form_node_form_alter(&$form, &$form_state, $form_id) {
+
+  $query_parameters = drupal_get_query_parameters();
+  if(!isset($query_parameters['hid'])){
+    return ;
+  }
+  // change rooms main form
+  if ($form['#node']->type=='special_offers_main'){
+
+    if (isset($query_parameters['hid'])){
+      $form['field_hotel']['und']['#value'] = $query_parameters['hid'];
+      $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+      $form['field_hotel']['#suffix'] = '</div>';
+    }
+    // disable on edit form
+    if (isset($form['#node']->nid)){
+     $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+     $form['field_hotel']['#suffix'] = '</div>';
+   }
+ }
+
+ if ($form['#node']->type=='special_offers'){
+  $query_parameters = drupal_get_query_parameters();
+
+  $main_nid =  core_get_list_nid_from_hotel_nid($query_parameters['hid'],'special_offers_main');
+
+  if (isset($query_parameters['hid']) && $main_nid ){
+
+    $form['field_special_offers_main']['und']['#value'] = $main_nid;
+    $form['field_special_offers_main']['#prefix'] = '<div style="display:none;">';
+    $form['field_special_offers_main']['#suffix'] = '</div>';
+  }
+    //disable on edit form
+  if (isset($form['#node']->nid)){
+   $form['field_special_offers_main']['#prefix'] = '<div style="display:none;">';
+   $form['field_special_offers_main']['#suffix'] = '</div>';
+ }
+}
+}
+
+/**
+ * implements hook_core_content_types
+ * @return [type] [description]
+ */
+function eme_special_offers_core_content_types() {
+  return array('special_offers','special_offers_main');
+}
+
+function eme_special_offers_menu_alter(&$items) {
+  if (isset($items['node/%node'])) {
+    $items['node/%node']['access callback'] = 'eme_special_offers_access';
+
+  }
+}
+
+/**
+ * custom node access callback for special offers content type
+ * @param  [type] $op   [description]
+ * @param  [type] $node [description]
+ * @return [type]       [description]
+ */
+function eme_special_offers_access ($op,$node){
+  if ($node->type=='special_offers' && $op=='view'){
+    $result =  views_get_view_result('special_offers', 'single_special_offer', $node->nid);
+    if (empty($result)){
+     return FALSE;
+   }
+   return node_access($op, $node);
+ }
+
+ else{
+   return node_access($op, $node);
+ }
+}

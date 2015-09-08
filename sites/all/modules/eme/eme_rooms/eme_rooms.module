@@ -81,10 +81,8 @@ function eme_rooms_get_let_nav(){
 
 function eme_rooms_form_node_form_alter(&$form, &$form_state, $form_id) {
 
-
-
   $query_parameters = drupal_get_query_parameters();
-  if(!isset($query_parameters['hid'])&& !isset($form['#node']->nid)){
+  if(!isset($query_parameters['hid']) || !isset($form['#node']->nid)){
     return ;
   }
   // change rooms main form

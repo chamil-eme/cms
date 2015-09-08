@@ -1,0 +1,12 @@
+name = EME Gallery
+description = This module will include all gallery related features.
+core = 7.x
+version = 7.x.1
+package  = eme
+
+;Authors
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+
+;Dependent Modules
+dependencies[] = gallery_features

@@ -1,0 +1,126 @@
+<?php
+/**
+ *  implements hook_theme
+ * @return type
+ */
+function eme_meeting_theme() {
+  return array(
+    'meeting_left_navigation' => array(
+      'variables' => array(
+        'links' => array()
+        ),
+      'template' => 'templates/left-nav'
+      )
+    );
+
+}
+/**
+ * Implements hook_block_info().
+ */
+function eme_meeting_block_info() {
+  $blocks = array();
+  $blocks['meeting_left_navigation'] = array(
+    'info' => t('meeting left navigation'),
+    'cache' => DRUPAL_NO_CACHE,
+    'weight' => 0,
+    );
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view().
+ */
+function eme_meeting_block_view($delta = '') {
+
+  $block =  array();
+  switch ($delta) {
+    case 'meeting_left_navigation':
+    $block['content'] = eme_meeting_get_let_nav();
+    $block['weight'] = 0;
+    break;
+  }
+  return $block;
+}
+
+
+function eme_meeting_get_let_nav(){
+
+  if ($node = menu_get_object()) {
+    $active = NULL;
+    $meeting_main_node =  FALSE;
+    if ($node->type=='meeting'){
+      $wrapper = entity_metadata_wrapper('node', $node);
+      $meeting_main_node =$wrapper->field_meeting_main->value();
+    }
+    if ($node->type=='meeting_main'){
+      $meeting_main_node =$node;
+      $active = 'active';
+    }
+    if (!$meeting_main_node){
+      return;
+    }
+
+    $results = views_get_view_result('meeting', 'left_navigation',$meeting_main_node->nid);
+    $links = array();
+
+    $links[] = array('link'=>l($meeting_main_node->title,drupal_get_path_alias('node/'.$meeting_main_node->nid)),'active'=>$active);
+    if (!empty($results)){
+      foreach($results as $row) {
+        $links[] = array('link'=>l($row->node_title,drupal_get_path_alias('node/'.$row->nid)),'active'=>$active = ($row->nid==$node->nid)?'active':'');
+      }
+    }
+    $links[] = array('link'=>l('Meeting Inquiry Form','node/add/meeting-inquiry-form'),'active'=>'');
+    return theme('meeting_left_navigation', array('links' => $links));
+  }
+}
+
+
+
+function eme_meeting_form_node_form_alter(&$form, &$form_state, $form_id) {
+
+ $query_parameters = drupal_get_query_parameters();
+ if(!isset($query_parameters['hid'])){
+  return ;
+}
+
+if ($form['#node']->type=='meeting_main'){
+
+  if (isset($query_parameters['hid'])){
+    $form['field_hotel']['und']['#value'] = $query_parameters['hid'];
+    $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+    $form['field_hotel']['#suffix'] = '</div>';
+  }
+    // disable on edit form
+  if (isset($form['#node']->nid)){
+   $form['field_hotel']['#prefix'] = '<div style="display:none;">';
+   $form['field_hotel']['#suffix'] = '</div>';
+ }
+}
+
+if ($form['#node']->type=='meeting'){
+  $query_parameters = drupal_get_query_parameters();
+
+  $main_nid =  core_get_list_nid_from_hotel_nid($query_parameters['hid'],'meeting_main');
+
+  if (isset($query_parameters['hid']) && $main_nid ){
+
+    $form['field_meeting_main']['und']['#value'] = $main_nid;
+    $form['field_meeting_main']['#prefix'] = '<div style="display:none;">';
+    $form['field_meeting_main']['#suffix'] = '</div>';
+  }
+    //disable on edit form
+  if (isset($form['#node']->nid)){
+   $form['field_meeting_main']['#prefix'] = '<div style="display:none;">';
+   $form['field_meeting_main']['#suffix'] = '</div>';
+ }
+}
+}
+
+/**
+ * implements hook_core_content_types
+ * @return [type] [description]
+ */
+function eme_meeting_core_content_types() {
+  return array('meeting','meeting_main');
+}

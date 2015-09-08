@@ -9,3 +9,5 @@ authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
 
 
 ;Dependent Modules
+
+dependencies[]  = dashboard_features

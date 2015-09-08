@@ -20,18 +20,27 @@ function hotel_features_field_default_field_instances() {
       'default' => array(
         'label' => 'hidden',
         'module' => 'text',
-        'settings' => array(),
+        'settings' => array(
+          'masonry' => FALSE,
+          'masonry_animated' => 0,
+          'masonry_animation_duration' => 500,
+          'masonry_column_width' => '',
+          'masonry_column_width_units' => 'px',
+          'masonry_fit_width' => 0,
+          'masonry_gutter_width' => 0,
+          'masonry_images_first' => 1,
+          'masonry_resizable' => 1,
+          'masonry_rtl' => 0,
+          'masonry_stamp_selector' => '',
+        ),
         'type' => 'text_default',
         'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(
-          'trim_length' => 600,
-        ),
-        'type' => 'text_summary_or_trimmed',
-        'weight' => 0,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 2,
       ),
     ),
     'entity_type' => 'node',
@@ -65,13 +74,13 @@ function hotel_features_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 5,
+        'weight' => 6,
       ),
     ),
     'entity_type' => 'node',
@@ -112,13 +121,13 @@ function hotel_features_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 5,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 5,
       ),
     ),
     'entity_type' => 'node',
@@ -154,7 +163,7 @@ function hotel_features_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 2,
+        'weight' => 3,
       ),
     ),
     'entity_type' => 'node',
@@ -188,6 +197,17 @@ function hotel_features_field_default_field_instances() {
         'settings' => array(
           'image_link' => '',
           'image_style' => 'medium',
+          'masonry' => FALSE,
+          'masonry_animated' => 0,
+          'masonry_animation_duration' => 500,
+          'masonry_column_width' => '',
+          'masonry_column_width_units' => 'px',
+          'masonry_fit_width' => 0,
+          'masonry_gutter_width' => 0,
+          'masonry_images_first' => 1,
+          'masonry_resizable' => 1,
+          'masonry_rtl' => 0,
+          'masonry_stamp_selector' => '',
         ),
         'type' => 'image',
         'weight' => 1,
@@ -270,8 +290,8 @@ function hotel_features_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-hotel-field_weight'
-  $field_instances['node-hotel-field_weight'] = array(
+  // Exported field_instance: 'node-hotel-field_short_description'
+  $field_instances['node-hotel-field_short_description'] = array(
     'bundle' => 'hotel',
     'default_value' => NULL,
     'deleted' => 0,
@@ -284,10 +304,62 @@ function hotel_features_field_default_field_instances() {
         'weight' => 3,
       ),
       'teaser' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'masonry' => FALSE,
+          'masonry_animated' => 0,
+          'masonry_animation_duration' => 500,
+          'masonry_column_width' => '',
+          'masonry_column_width_units' => 'px',
+          'masonry_fit_width' => 0,
+          'masonry_gutter_width' => 0,
+          'masonry_images_first' => 1,
+          'masonry_resizable' => 1,
+          'masonry_rtl' => 0,
+          'masonry_stamp_selector' => '',
+        ),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_short_description',
+    'label' => 'Short Description',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 39,
+    ),
+  );
+
+  // Exported field_instance: 'node-hotel-field_weight'
+  $field_instances['node-hotel-field_weight'] = array(
+    'bundle' => 'hotel',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 3,
+        'weight' => 4,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 4,
       ),
     ),
     'entity_type' => 'node',
@@ -317,6 +389,7 @@ function hotel_features_field_default_field_instances() {
   t('Country');
   t('Custom htag');
   t('Images');
+  t('Short Description');
   t('Weight');
 
   return $field_instances;

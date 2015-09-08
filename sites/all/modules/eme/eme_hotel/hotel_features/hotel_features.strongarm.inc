@@ -158,6 +158,7 @@ function hotel_features_strongarm() {
     0 => 'bentota',
     1 => 'hotel-x',
     2 => 'hotel-y',
+    3 => 'hotel-z',
   );
   $export['menu_options_hotel'] = $strongarm;
 
@@ -223,6 +224,13 @@ function hotel_features_strongarm() {
   $strongarm->name = 'node_submitted_hotel_main';
   $strongarm->value = 1;
   $export['node_submitted_hotel_main'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_hotel_pattern';
+  $strongarm->value = '[node:title]';
+  $export['pathauto_node_hotel_pattern'] = $strongarm;
 
   return $export;
 }

@@ -1,0 +1,138 @@
+<?php
+
+include_once DRUPAL_ROOT .'/'. drupal_get_path('module', 'eme_gallery') .'/includes/eme_gallery_styles.inc';
+/**
+ * Implements hook_field_formatter_info().
+ */
+function eme_gallery_field_formatter_info() {
+  return array(
+    'eme_gallery_default' => array(
+      'label' => t('eMarketingEye Gallery'),
+      'field types' => array('image','media'),
+      'settings' => array(
+        'style' => 'masonary',
+        'open_in'=>'lightbox',
+        'gallery_image_style'=>'masonary',
+        'full_image_style' =>'original',
+        'shuffle' =>TRUE
+
+        ),
+      'description' => t('Display filed image as a gallery.'),
+      ),
+    );
+}
+
+
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function eme_gallery_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  $element = array();
+  $element['style'] = array(
+    '#type'           => 'select',
+    '#title'          => t('Style'),
+    '#description'    => t('Select Style need to apply for the images'),
+    '#default_value'  => $settings['style'],
+    '#options'        => array(
+      'masonary'  => 'Masonary',
+      'justified' => 'Justified',
+      'grid'  => 'Grid',
+      ),
+    );
+  $element['open_in'] = array(
+    '#type'           => 'select',
+    '#title'          => t('Open In'),
+    '#description'    => t('Select the view method of image'),
+    '#default_value'  => $settings['open_in'],
+    '#options'        => array(
+      'new_window'  => 'New window',
+      'popup_window' => 'Popup window',
+      'lightbox'  => 'Lightbox',
+      ),
+    );
+
+  $image_styles =  image_styles();
+  $styles =  array('original'=>'Original');
+  foreach ($image_styles as $key=>$image_style){
+    $styles[$key]=$image_style['label'];
+  }
+
+  $element['gallery_image_style'] = array(
+    '#type'           => 'select',
+    '#title'          => t('Image list style'),
+    '#description'    => t('Select the image list style'),
+    '#default_value'  => $settings['gallery_image_style'],
+    '#options'        => $styles
+    );
+
+  $element['full_image_style'] = array(
+    '#type'           => 'select',
+    '#title'          => t('Select the image view style'),
+    '#description'    => t('Select the image view style'),
+    '#default_value'  => $settings['full_image_style'],
+    '#options'        => $styles
+    );
+
+  $element['full_image_style'] = array(
+    '#type'           => 'select',
+    '#title'          => t('Select the image view style'),
+    '#description'    => t('Select the image view style'),
+    '#default_value'  => $settings['full_image_style'],
+    '#options'        => $styles
+    );
+
+  $element['shuffle'] = array(
+    '#type'           => 'checkbox',
+    '#title'          => t('shuffle images'),
+    '#description'    => t('shuffle images'),
+    '#default_value'  => $settings['shuffle'],
+    );
+  return $element;
+}
+
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function eme_gallery_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  $summary = t('Current Settings - Using a @style for image gallery and image view method is @open_in', array(
+    '@style'=> $settings['style'],
+    '@open_in'=> $settings['open_in'],
+    ));
+  return $summary;
+}
+
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function eme_gallery_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $callable = 'eme_gallery_'.$display['settings']['style'].'_style';
+  if(function_exists($callable)) {
+   return  $callable($entity_type, $entity, $field, $instance, $langcode, $items, $display);
+ }
+
+}
+
+
+/**
+ *  implements hook_theme
+ * @return type
+ */
+function eme_gallery_theme() {
+  return array(
+    'eme_gallery_masonary' => array(
+      'variables' => array(
+        'images' => NULL,
+        'settings'=>NULL
+        ),
+      'template' => 'templates/masonary-view'
+      )
+    );
+
+}

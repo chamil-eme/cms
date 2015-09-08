@@ -1,0 +1,7 @@
+machine name  = imagesloaded
+name          = masonry libraray
+vendor url    = http://masonry.desandro.com/
+download url  = http://masonry.desandro.com/
+version       = 3.3.2
+
+files[js][imagesloaded.pkgd.min.js]  = imagesloaded.pkgd.min.js

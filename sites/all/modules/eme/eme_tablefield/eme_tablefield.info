@@ -1,0 +1,12 @@
+name = EME tablefield
+description = This module add extra display format for the tablefield module
+core = 7.x
+version = 7.x.1
+package  = eme
+
+;Authors
+authors[] = Chamil Sanjeewa <chamil@emarketingeye.com>
+
+
+;Dependent Modules
+ependencies[] = eme_tablefield
