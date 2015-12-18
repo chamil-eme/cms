@@ -1,0 +1,95 @@
+#lang-dropdown-select-language,
+#lang-dropdown-select-language .select{
+  background-color: #202020 !important;
+}
+#imgtextoverlay {
+  background: rgba(0,0,0,0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  position: absolute;
+}
+
+#imgtextoverlay  p {
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 0;
+  padding: 14px 14px 0;
+}
+
+
+#imgtextoverlay  a{  display: inline-block; */
+  font-size: 12px;
+  padding: 2px 0 10px 14px;
+  color: #BCA474;
+
+}
+
+
+/*fix from https://www.drupal.org/node/1985624*/
+
+.views-slideshow-cycle-main-frame-row-item {
+  float: left;
+}
+/*.view-content, .views-row, .field-item {
+  border-color:#999;
+  border-style:solid;
+  border-width:1;
+  }*/
+
+  /******************************************/
+/*  .container{
+      width: 100%;
+   margin: 0;
+   padding: 0;
+ }
+
+ */
+ header#navbar {
+  background-color: #47244a;
+  margin-bottom: 0px;
+  border:none;
+  border-radius:0px;
+
+}
+
+header#navbar ul.menu {
+  float:right;
+}
+
+/*.tb-megamenu, .footer {
+  background-color: #47244a;
+  }*/
+ul.tb-megamenu-nav{
+  float: right;
+}
+.block-eme-menu ul.tb-megamenu-nav{
+  float: left;
+}
+#views_slideshow_cycle_teaser_section_banner-block_1 .views-slideshow-cycle-main-frame-row {
+  width: 100% !important;
+}
+.footer .region-footer {
+  float: none;
+  display: inline-block;
+}
+
+.footer .block  {
+  color: #ffffff;
+  float: none;
+  display: inline-block;
+  margin-left: 120px;
+}
+
+.main-container .row {
+  margin-right: 100px;
+  margin-left: 100px;
+  margin-top: 50px;
+}
+
+
+.webform-container-inline.webform-datepicker  div.form-item.form-type-select {
+  display: none;
+}

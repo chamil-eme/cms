@@ -78,7 +78,6 @@ function gallery_features_field_default_field_instances() {
         'settings' => array(
           'full_image_style' => 'original',
           'gallery_image_style' => 'masonary',
-          'gutter' => 10,
           'open_in' => 'lightbox',
           'shuffle' => 0,
           'style' => 'masonary',

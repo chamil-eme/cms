@@ -29,11 +29,11 @@ function gallery_features_image_default_styles() {
           'width' => 200,
           'height' => '',
           'upscale' => 0,
-          ),
-        'weight' => 1,
         ),
+        'weight' => 1,
       ),
-    );
+    ),
+  );
 
   return $styles;
 }
@@ -50,8 +50,8 @@ function gallery_features_node_info() {
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',
-      ),
-    );
+    ),
+  );
   drupal_alter('node_info', $items);
   return $items;
 }

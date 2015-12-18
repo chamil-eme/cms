@@ -3,21 +3,21 @@
 .views-slideshow-cycle-main-frame-row-item {
   float: left;
 }
-/*.view-content, .views-row, .field-item {
+.view-content, .views-row, .field-item {
   border-color:#999;
   border-style:solid;
-  border-width:1;
-  }*/
+  border-width:1px;
+  }
 
-/******************************************/
-.container{
- /*   width: 100%;*/
- margin: 0;
- padding: 0;
-}
+  /******************************************/
+  .container{
+   /*   width: 100%;*/
+   margin: 0;
+   padding: 0;
+ }
 
 
-header#navbar {
+ header#navbar {
   background-color: #47244a;
   margin-bottom: 0px;
   border:none;
@@ -57,4 +57,9 @@ ul.tb-megamenu-nav{
   margin-right: 100px;
   margin-left: 100px;
   margin-top: 50px;
+}
+
+
+.webform-container-inline.webform-datepicker  div.form-item.form-type-select {
+  display: none;
 }

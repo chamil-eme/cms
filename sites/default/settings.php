@@ -213,20 +213,20 @@
  * @endcode
  */
 $databases = array (
-  'default' => 
+  'default' =>
   array (
-    'default' => 
+    'default' =>
     array (
-      'database' => 'cms',
+      'database' => 'cms_new',
       'username' => 'root',
       'password' => 'root',
       'host' => '127.0.0.1',
       'port' => '',
       'driver' => 'mysql',
       'prefix' => '',
+      ),
     ),
-  ),
-);
+  );
 
 /**
  * Access control for update.php script.

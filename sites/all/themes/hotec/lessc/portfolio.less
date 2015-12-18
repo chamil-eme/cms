@@ -1,0 +1,244 @@
+/*----------------------------------------------------------------------
+# Package - JM Template
+# ----------------------------------------------------------------------
+# Author - JoomlaMan http://www.joomlaman.com
+# Copyright Copyright under commercial licence (C) 2012 - 2013 JoomlaMan
+# License http://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3
+-----------------------------------------------------------------------*/
+
+.dexp-portfolio-filter {
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 0;
+  .text-center;
+  li {
+    display: inline-block;
+    margin-bottom: 5px;
+    a {
+      transition: all 0.3s ease 0s !important;
+      .box-shadow(none);
+      padding: 0 13px;
+      text-transform: uppercase;
+      outline: none;
+      color: #202020;
+      text-decoration: none;
+    }
+    a.active, a:hover {
+      color: @base_color;
+      background: transparent;
+      .text-shadow(none);
+      .box-shadow(none);
+      text-decoration: none;
+    }
+  }
+}
+.view-portfolio {
+  position: relative;
+  .portfolio-filters {
+    ul.dexp-portfolio-filter {
+      position: absolute;
+        right: 0;
+        text-align: right !important;
+        top: -62px;
+        li {
+          a.btn {
+            background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+            color: #333333;
+            .text-shadow(none);
+            .box-shadow(none);
+            padding: 0 13px;
+            &.active, &:hover {
+              color: @base_color;
+            }
+            &:hover, &:focus {
+              background-color: transparent !important;
+            }
+          }
+          + li {
+            a {
+              background: url("../images/doted-divider.png") no-repeat scroll left center rgba(0, 0, 0, 0) !important;
+            }
+          }
+        }
+    }
+  }
+  .node-superhero-portfolio,
+  .node-dexp-portfolio{
+    margin-bottom: 30px;
+  }
+  .portfolio-caption {
+    position: relative;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 93%;
+      height: 86%;
+      margin: auto;
+      background: transparent;
+      .transition(all 0.5s ease 0s);
+    }
+    .portfolio-button {
+      position: absolute;
+      top: 40%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      opacity: 0;
+      .transition(all 0.5s ease 0s);
+      a {
+          display: inline-block;
+          height: 40px;
+          text-indent: -9999px;
+          width: 40px;
+          &.go-detail {
+            background: url(../images/thumb-detail.png) no-repeat center center #BCA474;
+          }
+          &.go-gallery {
+            background: url(../images/thumb-gallery.png) no-repeat center center #BCA474; 
+          }
+          &:hover {
+            background-color: #202020;
+          }
+      }
+    }
+    &:hover {
+      &:before {
+        background: rgba(255, 255, 255, 0.6);
+      }
+      .portfolio-button  {
+        opacity: 1;
+      }
+    }
+  }
+
+  .portfolio-detail {
+    h2 {
+      font-size: 16px;
+        margin: 0;
+        padding-top: 14px;
+        margin-bottom: 3px;
+        line-height: 27px;
+        text-transform: uppercase;
+        a {
+          text-transform: uppercase;
+        }
+    }
+    .field-name-field-room-price .field-item {
+      color: #858585;
+      font-size: 12px;
+      font-style: italic;
+    }
+  }
+  .bx-controls-direction {
+    display: none;
+  }
+}
+// Node //
+.node-dexp-portfolio {
+  .portfolio-details {
+    .field-name-field-portfolio-categories {
+      .field-items {
+        padding-left: 10px;
+        font-size: 13px;
+        .field-item {
+          &:before {
+            content:  "\f00c";
+            font-family: FontAwesome;
+            font-size: 12px;
+            padding-right: 6px;
+          }
+        }
+      }
+      &:before {
+        content: "Categories:";
+      }
+    }
+    .field-name-field-portfolio-url {
+      margin-top: 10px;
+      .field-items {
+        padding-left: 10px;
+        font-size: 13px;
+        .field-item {
+          &:before {
+            content:  "\f00c";
+            font-family: FontAwesome;
+            font-size: 12px;
+            padding-right: 6px;
+          }
+        }
+      }
+      &:before {
+        content: "Link:";
+      }
+    }
+  }
+}
+.node-superhero-portfolio,
+.node-dexp-portfolio {
+  .single-portfolio-images {
+    padding-left: 0;
+  }
+  .single-portfolio-summary{
+    .single-portfolio-des {
+      > h3 {
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 7px;
+        padding-bottom: 4px;
+      }
+    }
+    .single-portfolio-details {
+      > h3 {
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 7px;
+        padding-bottom: 4px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 18px;
+        li {
+          border-bottom: 1px dotted #CCCCCC;
+          padding: 5px 0;
+          .field-label {
+            display: inline-block;
+            width: 80px;
+            .left;
+          }
+          .field-items {
+            overflow: hidden;
+          }
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+      a.btn {
+        font-size: 11px;
+        padding: 5px 12px;
+      }
+    }
+  }
+  .content {
+    margin-top: 30px;
+  }
+}
+.rtl {
+  .node-superhero-portfolio {
+    .single-portfolio-images {
+      padding-left: 15px;
+      padding-right: 0;
+    }
+  }
+}
+.view-latest-projects {
+  .node-dexp-portfolio {
+    margin-right: 5px;
+  }
+}

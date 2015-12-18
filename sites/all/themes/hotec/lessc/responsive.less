@@ -1,0 +1,228 @@
+/*----------------------------------------------------------------------
+# Package - JM Template
+# ----------------------------------------------------------------------
+# Author - JoomlaMan http://www.joomlaman.com
+# Copyright Copyright under commercial licence (C) 2012 - 2013 JoomlaMan
+# License http://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3
+-----------------------------------------------------------------------*/
+/***** Import Font *****/
+@media (min-width: 1170px) {
+	.container {
+	    max-width: 1038px;
+	}
+}
+@media (min-width: 1024px) and (max-width: 1220px) {
+	// Main Menu
+	#section-header .dexp-dropdown > ul > li > a {
+		padding: 0 16px;
+	}
+}
+@media (min-width: 992px) and (max-width: 1024px) {
+	// Main Menu
+	#section-header .dexp-dropdown > ul > li > a {
+		font-size: 14px;
+		padding: 0 13px;
+	}
+	#section-header .dexp-dropdown ul li a {
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 992px) {
+	body {
+		background: @white;
+	}
+	#section-header {
+		.box-shadow(none);
+	}
+	.container {
+	    width: auto;
+	}
+	.region-search .search-menu {
+		display: none;
+	}
+	#section-main-content .container {
+		margin-top: 0 !important;
+		padding: 0 15px;
+		.box-shadow(none);
+	}
+	.res-btn-w {
+		display: none;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+	.box-feature, .sh-view-team {
+		margin-bottom: 20px;
+	}
+	// Bottom
+	#section-bottom {
+		[class^="region-bottom-"], [class*="region-bottom-"] {
+			margin-bottom: 25px;
+		}
+	}
+}
+@media (max-width: 767px) {
+	// Page New Style Video 
+	.media-youtube-video, .media-vimeo-video {
+		iframe {
+			width: 100%;
+			height: auto;
+		}
+	}
+	.block.block-block {
+		margin-bottom: 20px;
+	}
+	.dexp-section {
+		.region:last-child {
+			.block.block-block {
+				margin-bottom: 0px;
+			}
+		}
+	}
+	.dexp-grid-items {
+		.dexp-grid-item {
+			margin-bottom: 20px;
+		}
+		.dexp-grid-item {
+			&:last-child {
+				margin-bottom: 0px;
+			}
+		}
+	}
+	.node-webform {
+		.webform-client-form{
+			.form-item {
+				width: 100%;
+				padding-right: 0px;
+				.webform-datepicker {
+					.form-item {
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+	// Newsletter
+	.block-newsletter {
+		max-width: 100%;
+		div.prefix {
+			width: 100%;
+		    text-align: center;
+		}
+		#newsletter-subscribe-form, .form-item-email, #subscribe {
+			width: 100%;
+		}
+	}
+	#section-footer {
+		.region-copyright, .region-socials-bottom .block p {
+			text-align: center !important;
+		}
+	}
+	/*================== Start Form Checkout ==================*/
+	#commerce-checkout-form-checkout {
+		fieldset {
+			width: 100%;
+			padding: 0;
+		}
+		#customer-profile-shipping-ajax-wrapper {
+			width: 100%;
+			fieldset {
+				width: 100%;
+			}
+		}
+	}
+	/*================== Start Form Checkout ==================*/
+
+	/*======== Start Node Portfolio ==========*/
+	.node-superhero-portfolio {
+		.single-portfolio-images {
+			margin-bottom: 30px;
+			padding: 0;
+			img {
+				width: 100%;
+			}
+		}
+		.single-portfolio-summary {
+			padding: 0;
+		}
+	}
+	/*======== End Node Portfolio ==========*/
+	.page-shortcode {
+		a.btn, button {
+			margin-bottom: 5px !important;
+		}
+	}
+	.feature-box {
+		.banner-item {
+			img {
+				width: 100%;
+			}
+		}
+	}
+	.footer-social {
+		width: 100%;
+		li a {
+			margin-bottom: 5px;
+		}
+	}
+	/*======== Responsive ==========*/
+	.xs-center {
+		text-align: center;
+	}
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+	.view-blog {
+		.bxslide {
+			width: 50%;
+			float: left;
+		}
+	}
+}
+@media (max-width: 640px) { 
+	#contact-site-form {
+		input[type="text"] {
+			width: 100%;
+		}
+	}
+	.btn-lg.responsive {
+		font-size: 15px;
+	}
+	.game-feature img {
+		width: 100%;
+	}
+	#outerImageContainer, #lightboxFrame {
+		width: 100% !important;
+	}
+	#outerImageContainer {
+		height: auto !important;
+	}
+	#lightboxFrame {
+		height: 340px !important;
+	}
+	/*======== Start Node Room ==========*/
+	.node-room .room-service ul li {
+		width: 100%;
+		span{
+			img{
+				margin-top: -5px;
+			}
+		}
+	}
+	/*======== End Node Room ==========*/
+}
+
+@media (max-width: 360px) {
+	#outerImageContainer {
+		height: auto !important;
+	}
+	#lightboxFrame {
+		height: 300px !important;
+	}
+	#commerce-checkout-form-checkout .checkout-buttons {
+		.checkout-cancel, .checkout-continue {
+			margin-bottom: 7px;
+		}
+	}
+}

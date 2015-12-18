@@ -22,6 +22,11 @@ drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 
 
 
+phpinfo();
+
+exit;
+
+
 
 $a= theme('eme_tablefield_formatter_tablefield_seating_capacity' ,array('element' => '3'));
 var_dump($a);

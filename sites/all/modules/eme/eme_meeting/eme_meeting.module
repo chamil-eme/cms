@@ -61,6 +61,7 @@ function eme_meeting_get_let_nav(){
       return;
     }
 
+
     $results = views_get_view_result('meeting', 'left_navigation',$meeting_main_node->nid);
     $links = array();
 
@@ -70,7 +71,7 @@ function eme_meeting_get_let_nav(){
         $links[] = array('link'=>l($row->node_title,drupal_get_path_alias('node/'.$row->nid)),'active'=>$active = ($row->nid==$node->nid)?'active':'');
       }
     }
-    $links[] = array('link'=>l('Meeting Inquiry Form','node/add/meeting-inquiry-form'),'active'=>'');
+
     return theme('meeting_left_navigation', array('links' => $links));
   }
 }
@@ -124,3 +125,4 @@ if ($form['#node']->type=='meeting'){
 function eme_meeting_core_content_types() {
   return array('meeting','meeting_main');
 }
+

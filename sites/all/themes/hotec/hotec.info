@@ -1,0 +1,92 @@
+name = Hotec
+description = "Hotec - Responsive Multi-Purpose Drupal Theme"
+core = 7.x
+base theme = drupalexp
+
+; Required Core Regions
+regions[help] = Help
+regions[page_top] = Page Top
+regions[page_bottom] = Page Bottom
+regions[content] = Content
+
+; Regions
+regions[logo] = Logo
+regions[menu] = Menu
+regions[sidebar] = Sidebar
+regions[sidebar_first] = Sidebar First
+regions[sidebar_second] = Sidebar Second
+regions[banner] = Banner
+regions[showcase] = Showcase
+regions[callus] = Call Us
+regions[map] = Map
+regions[side] = Map
+
+; Hotec Regions
+regions[top_first] = Top first
+regions[top_second] = Top second
+regions[feature] = Feature
+regions[feature_first] = Feature First
+regions[feature_second] = Feature Second
+regions[feature_third] = Feature Third
+regions[user_first] = User First
+regions[user_second] = User Second
+regions[news] = News
+regions[news_first] = News First
+regions[news_second] = News Second
+regions[news_third] = News Third
+regions[subscribe] = Subscribe
+regions[bottom_first] = Bottom First
+regions[bottom_second] = Bottom Second
+regions[bottom_third] = Bottom Third
+regions[bottom_four] = Bottom Four
+regions[footer_first] = Footer First
+regions[footer_second] = Footer Second
+regions[page_title] = Page Title
+regions[breadcrumb] = Breadcrumb
+regions[testimonials] = Testimonial
+regions[client] = Client
+regions[event] = Event
+
+;Extra regions
+regions[search] = Search
+regions[user1] = User 1
+regions[user2] = User 2
+regions[user3] = User 3
+regions[user4] = User 4
+regions[user5] = User 5
+regions[user6] = User 6
+regions[user7] = User 7
+regions[user8] = User 8
+regions[user9] = User 9
+regions[user10] = User 10
+regions[user11] = User 11
+regions[user12] = User 12
+regions[user13] = User 13
+regions[user14] = User 14
+regions[user15] = User 15
+regions[user16] = User 16
+regions[user17] = User 17
+regions[user18] = User 18
+regions[user19] = User 19
+regions[user20] = User 20
+
+lessc[] = lessc/variables.less
+lessc[] = lessc/mixins.less
+lessc[] = lessc/fonts.less
+lessc[] = lessc/drupal.less
+lessc[] = lessc/style.less
+lessc[] = lessc/style-rtl.less
+lessc[] = lessc/buttons.less
+lessc[] = lessc/mainmenu.less
+lessc[] = lessc/portfolio.less
+lessc[] = lessc/shop.less
+lessc[] = lessc/module.less
+lessc[] = lessc/shortcode.less
+lessc[] = lessc/typography.less
+lessc[] = lessc/responsive.less
+lessc[] = lessc/slideshow.less
+
+; Scripts
+scripts[] = assets/js/hotec.js
+
+stylesheets[all][] = css/style.css
